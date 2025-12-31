@@ -1,0 +1,51 @@
+---
+title: "Calculation, BCG, Intro"
+date: "2023-02-03"
+output: html_fragment
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE
+                      , results = 'asis'
+                      , warning = FALSE
+                      , message = FALSE)
+```
+
+# Introduction
+
+The Great Plains Biological Condition Gradient (BCG) is divided into six
+levels of biological condition along a generalized stressor-response
+curve, ranging from observable biological conditions found at no or low
+levels of stressors (level 1) to those found at high levels of stressors
+(level 6) (Figure 1)
+(<a href="https://www.epa.gov/sites/default/files/2016-02/documents/bcg-practioners-guide-report.pdf" target="blank">USEPA
+2016</a>).
+
+Information on BCG input metrics and rules can be found on the bug and
+fish BCG subtabs. For more detailed information, see the Great Plains
+BCG report [in progress] on the References page.
+
+<a href="https://github.com/Blocktt/GreatPlainsBCGCalc/raw/main/inst/apps/GreatPlainsBCGCalc/www/links/RedundantTaxa_20240719.pdf" target="blank">**Redundant
+Taxa**</a>: There is a column called EXCLUDE that will be added to your
+input file automatically when you run the BCG Calculator. The EXCLUDE
+field marks redundant (non-distinct) taxa. Redundant taxa are excluded
+from richness metric calculations but are included in the composition
+(percent individuals) metrics. There is a ‘Generate Redundant Taxa
+Column’ box which is checked as the default setting since this is how
+metric calculations were handled during BCG model calibration. The box
+can be unchecked if you want to substitute your own designations.
+
+For guidance on how to interpret the results, download the **Metadata -
+BCG output** files on the Instructions page.
+
+![](images/About_Fig2_BCG.jpg){width="75%"}
+
+Figure 1. Conceptual diagram of the Biological Condition Gradient (BCG)
+model.
+
+------------------------------------------------------------------------
+
+*Last updated 2024-08-06*

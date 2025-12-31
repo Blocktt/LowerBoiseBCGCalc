@@ -1,0 +1,349 @@
+
+
+
+<div id="prepare-an-input-file-with-file-builder" class="section level1">
+<h1>Prepare an input file with <em>File Builder</em></h1>
+<p>The BCG models are calibrated for specific collection and processing
+protocols. Make sure you are using the BCG model that is appropriate for
+your samples.</p>
+<ul>
+<li><p>Bug methods
+[<a href="https://github.com/Blocktt/GreatPlainsBCGCalc/raw/main/inst/apps/GreatPlainsBCGCalc/www/links/GP_Bug_Methods_20240730.pdf" target="blank">PDF</a>]</p></li>
+<li><p>Fish methods
+[<a href="https://github.com/Blocktt/GreatPlainsBCGCalc/raw/main/inst/apps/GreatPlainsBCGCalc/www/links/GP_Fish_Methods_20240730.pdf" target="blank">PDF</a>]</p></li>
+</ul>
+<p>EXAMPLE INPUT FILES</p>
+<ul>
+<li><p>Bugs
+[<a href="https://github.com/Blocktt/GreatPlainsBCGCalc/raw/main/inst/apps/GreatPlainsBCGCalc/www/links/TestFiles_FileBuilder_Bugs_20240730.zip" target="blank">ZIP</a>]</p></li>
+<li><p>Fish
+[<a href="https://github.com/Blocktt/GreatPlainsBCGCalc/raw/main/inst/apps/GreatPlainsBCGCalc/www/links/TestFiles_FileBuilder_Fish_20240730.zip" target="blank">ZIP</a>]</p></li>
+</ul>
+<p>The File Builder joins the taxon name in the input file with the
+‘original taxaID’ column in the
+<a href="https://github.com/leppott/BioMonTools_SupportFiles/tree/main/data/taxa_official/GP" target="blank">Taxa
+Translator table</a> and performs two functions:</p>
+<ul>
+<li><p>Translates the original taxon name to the proper OTU for the
+calculation.</p></li>
+<li><p>Adds in new columns with taxa attributes and hierarchy (e.g.,
+Order, Family) that are needed for the metric calculations.</p></li>
+</ul>
+<p>The input file must be a comma-separated file (CSV).</p>
+<p><a href="https://github.com/Blocktt/GreatPlainsBCGCalc/raw/main/inst/apps/GreatPlainsBCGCalc/www/links/IndexNameClass_20240730.zip" target="blank">Index
+Name and Index Class</a> are required for all calculations (they tell R
+which BCG rules and IBI metrics to apply). See tables at bottom of
+page.</p>
+<p>The input file must be a comma-separated file (CSV). It can include
+data for multiple samples, sites and Index Classes.</p>
+<p>Required fields for all calculations. Column names are flexible (use
+drop-down menus to match).</p>
+<table class="table" style="color: black; width: auto !important; ">
+<thead>
+<tr>
+<th style="text-align:left;">
+Column Name 
+</th>
+<th style="text-align:left;">
+Name
+</th>
+<th style="text-align:left;">
+Data Type
+</th>
+<th style="text-align:left;">
+Domain (allowable entries)
+</th>
+<th style="text-align:left;">
+Description
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Index_Name
+</td>
+<td style="text-align:left;">
+flexible
+</td>
+<td style="text-align:left;">
+text
+</td>
+<td style="text-align:left;">
+GP_Fish_BCG, IA_Bugs_BCG, KS_Bugs_BCG, MO_Bugs_BCG, NE_Bugs_BCG
+</td>
+<td style="text-align:left;">
+Tells R which calculation to run
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Index_Class
+</td>
+<td style="text-align:left;">
+flexible
+</td>
+<td style="text-align:left;">
+text
+</td>
+<td style="text-align:left;">
+see table below for list of options
+</td>
+<td style="text-align:left;">
+Tells R which rules and metrics to apply, based on class
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+SampleID
+</td>
+<td style="text-align:left;">
+flexible
+</td>
+<td style="text-align:left;">
+text
+</td>
+<td style="text-align:left;">
+NA (flexible)
+</td>
+<td style="text-align:left;">
+Unique sample identifier (typically comprised of the site name, sample
+date, and replicate number)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+TaxaID
+</td>
+<td style="text-align:left;">
+flexible
+</td>
+<td style="text-align:left;">
+text
+</td>
+<td style="text-align:left;">
+NA (flexible)
+</td>
+<td style="text-align:left;">
+Taxon name, using the BCG Operational Taxonomic Unit (OTU)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N_Taxa
+</td>
+<td style="text-align:left;">
+flexible
+</td>
+<td style="text-align:left;">
+numeric
+</td>
+<td style="text-align:left;">
+non-negative real number or for large/rare entries, -99, 0 or blank
+</td>
+<td style="text-align:left;">
+Number of individuals
+</td>
+</tr>
+</tbody>
+</table>
+<p>There is <strong>one additional required field for the Iowa bug
+BCG</strong> (column name must match exactly):</p>
+<ul>
+<li>BugGear (text entries: Qualitative, Surber, Hess, Artificial
+Substrate, Low-Flow Artificial Substrate and Anchored Artifical
+Substrate)</li>
+</ul>
+<p>Optional fields (e.g., SiteID, latitude, longitude, collection date)
+can be selected as well and will be carried through into the File
+Builder output file.</p>
+<p>IMPORTANT! Do not include Life Stage or other fields that might cause
+a taxon to occur in more than one row for a given sample (which could
+lead to double-counting of that taxon in the richness metrics).</p>
+<p>Below are the unique combinations of INDEX_NAME and INDEX_CLASS and
+descriptions of how sites should be correctly assigned.</p>
+<p><strong>Fish</strong></p>
+<table class="table" style="color: black; width: auto !important; ">
+<thead>
+<tr>
+<th style="text-align:left;">
+Index_Name
+</th>
+<th style="text-align:left;">
+INDEX_CLASS
+</th>
+<th style="text-align:left;">
+Description
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+GP_Fish_BCG
+</td>
+<td style="text-align:left;">
+Small_47c
+</td>
+<td style="text-align:left;">
+Omernik ecoregion = Iowan Surface (47c), DrainageArea &lt; 100 km2 (38.6
+mi2)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GP_Fish_BCG
+</td>
+<td style="text-align:left;">
+Large_47c
+</td>
+<td style="text-align:left;">
+Omernik ecoregion = Iowan Surface (47c), DrainageArea &gt;= 100 km2
+(38.6 mi2)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GP_Fish_BCG
+</td>
+<td style="text-align:left;">
+Small_Not_47c
+</td>
+<td style="text-align:left;">
+Omernik ecoregion NOT Iowan Surface (47c), DrainageArea &lt; 100 km2
+(38.6 mi2)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GP_Fish_BCG
+</td>
+<td style="text-align:left;">
+Large_Not_47c
+</td>
+<td style="text-align:left;">
+Omernik ecoregion NOT Iowan Surface (47c), DrainageArea &gt;= 100 km2
+(38.6 mi2)
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Bugs (as of 07/30/2024; more Index Classes will be
+added)</strong></p>
+<table class="table" style="color: black; width: auto !important; ">
+<thead>
+<tr>
+<th style="text-align:left;">
+Index_Name
+</th>
+<th style="text-align:left;">
+INDEX_CLASS
+</th>
+<th style="text-align:left;">
+Description
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+IA_Bugs_BCG
+</td>
+<td style="text-align:left;">
+CIP_medlrg_soft
+</td>
+<td style="text-align:left;">
+Omernik ecoregion = Central Irregular Plains (CIP; 40), DrainageArea
+&gt;= 75km2 (30mi2), % soft sediment (reach-scale) &gt;= 60%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+IA_Bugs_BCG
+</td>
+<td style="text-align:left;">
+WCBP_medlrg_soft
+</td>
+<td style="text-align:left;">
+Omernik ecoregion = Western Corn Belt (WCBP; 47) excluding the Iowan
+Surface (47c), DrainageArea &gt;= 75km2 (30mi2), % soft sediment
+(reach-scale) &gt;= 60%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+IA_Bugs_BCG
+</td>
+<td style="text-align:left;">
+IowaSrf_medlrg_soft
+</td>
+<td style="text-align:left;">
+Omernik ecoregion = Iowan Surface (47c), DrainageArea &gt;= 75km2
+(30mi2), % soft sediment (reach-scale) &gt;= 60%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+KS_Bugs_BCG
+</td>
+<td style="text-align:left;">
+CIP_medium
+</td>
+<td style="text-align:left;">
+Omernik ecoregion = Central Irregular Plains (CIP; 40), modeled median
+flow 10-100 CFS (Perry et al. 2004)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+MO_Bugs_BCG
+</td>
+<td style="text-align:left;">
+DNR_GlidePool_fall
+</td>
+<td style="text-align:left;">
+Agency = MO DNR, Sampling Regime = GlidePool (GP), Season = fall (approx
+September 15-October 15)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NE_Bugs_BCG
+</td>
+<td style="text-align:left;">
+CGP_mNRSA
+</td>
+<td style="text-align:left;">
+Omernik ecoregion = Central Great Plains (CGP; 27), Sampling Method =
+modified EPA National Rivers and Streams Assessment (NRSA)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NE_Bugs_BCG
+</td>
+<td style="text-align:left;">
+WCBP_mNRSA
+</td>
+<td style="text-align:left;">
+Level 3 ecoregion = Western Corn Belt (WCBP; 47), Sampling Method =
+modified EPA National Rivers and Streams Assessment (NRSA)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NE_Bugs_BCG
+</td>
+<td style="text-align:left;">
+RifRocky_mNRSA
+</td>
+<td style="text-align:left;">
+Sampling Method = modified EPA National Rivers and Streams Assessment
+(NRSA), % Cobble &gt;= 10% and % Riffle &gt; 5%
+</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p>Last updated: 2024-07-31</p>
+</div>

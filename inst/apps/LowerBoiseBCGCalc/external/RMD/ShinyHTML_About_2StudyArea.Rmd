@@ -1,0 +1,27 @@
+---
+title: "About_2StudyArea"
+date: "2024-07-31"
+output: html_fragment
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE
+                      , results = 'asis'
+                      , warning = FALSE
+                      , message = FALSE)
+```
+
+# Study area
+
+This R-based tool calculates Biological Condition Gradient (BCG) model
+outputs for macroinvertebrate and fish assemblages in Great Plains
+streams.
+
+![](images/About_Fig1_StudyArea.jpg){width="50%"}
+
+------------------------------------------------------------------------
+
+Last updated 2024-07-31
