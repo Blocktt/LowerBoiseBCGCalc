@@ -333,6 +333,12 @@ shinyServer(function(input, output) {
                                        , "attributes_metadata_filename"]
       col_taxaid_attr <- df_pick_taxoff[df_pick_taxoff$project == sel_proj
                                         , "attributes_taxaid"]
+
+      fn_ageclass <- df_pick_taxoff[df_pick_taxoff$project == sel_proj
+                                            , "ageclass_filename"]
+      col_taxaid_ageclass <- df_pick_taxoff[df_pick_taxoff$project == sel_proj
+                                        , "ageclass_taxaid"]
+
       sel_user_sampid <- input$taxatrans_user_col_sampid
 
       sel_taxaid_drop <-  df_pick_taxoff[df_pick_taxoff$project == sel_proj
@@ -440,7 +446,7 @@ shinyServer(function(input, output) {
       ## Data,  Official Taxa----
       url_taxoff <- file.path(url_bmt_base
                               , "taxa_official"
-                              , "GP"
+                              , "LowerBoise"
                               , fn_taxoff)
       temp_taxoff <- tempfile(fileext = ".csv")
       httr::GET(url_taxoff, write_disk(temp_taxoff))
@@ -451,7 +457,7 @@ shinyServer(function(input, output) {
       if (!is.null(fn_taxoff_meta)) {
         url_taxoff_meta <- file.path(url_bmt_base
                                      , "taxa_official"
-                                     , "GP"
+                                     , "LowerBoise"
                                      , fn_taxoff_meta)
         temp_taxoff_meta <- tempfile(fileext = ".csv")
         httr::GET(url_taxoff_meta, write_disk(temp_taxoff_meta))
@@ -463,7 +469,7 @@ shinyServer(function(input, output) {
       if (!is.null(fn_taxoff_attr)) {
         url_taxoff_attr <- file.path(url_bmt_base
                                      , "taxa_official"
-                                     , "GP"
+                                     , "LowerBoise"
                                      , fn_taxoff_attr)
         temp_taxoff_attr <- tempfile(fileext = ".csv")
         httr::GET(url_taxoff_attr, write_disk(temp_taxoff_attr))
@@ -475,13 +481,25 @@ shinyServer(function(input, output) {
       if (!is.null(fn_taxoff_meta)) {
         url_taxoff_attr_meta <- file.path(url_bmt_base
                                      , "taxa_official"
-                                     , "GP"
+                                     , "LowerBoise"
                                      , fn_taxoff_attr_meta)
         temp_taxoff_attr_meta <- tempfile(fileext = ".csv")
         httr::GET(url_taxoff_attr_meta, write_disk(temp_taxoff_attr_meta))
 
         df_taxoff_attr_meta <- read.csv(temp_taxoff_attr_meta)
       }## IF ~ fn_taxaoff_meta
+
+      ## Data, Official Fish Age Class----
+      if (!is.null(fn_ageclass)) {
+        url_ageclass <- file.path(url_bmt_base
+                                          , "taxa_official"
+                                          , "LowerBoise"
+                                          , fn_ageclass)
+        temp_ageclass <- tempfile(fileext = ".csv")
+        httr::GET(url_ageclass, write_disk(temp_ageclass))
+
+        df_ageclass <- read.csv(temp_ageclass)
+      }## IF ~ fn_ageclass
 
 
       ## Calc, 03, Run Function ----
@@ -520,6 +538,25 @@ shinyServer(function(input, output) {
                                                        , sum_n_taxa_group_by
                                                        , trim_ws = TRUE
                                                        , match_caps = TRUE)
+
+      if (!is.null(fn_ageclass)) {
+        taxaid_official_project <- "TaxaID"
+        col_taxaid_ageclass <- "TAXAID"
+
+        taxatrans_results$merge <- taxatrans_results$merge %>%
+          mutate(row_id = row_number()) %>%  # create row id BEFORE the join
+          left_join(df_ageclass %>% select(any_of(col_taxaid_ageclass)
+                                           , MinLength_mm, MaxLength_mm
+                                           , AgeClass, AgeClass_text)
+                    , by = setNames(col_taxaid_ageclass
+                                    , taxaid_official_project)) %>%
+          mutate(match_flag = dplyr::between(Length_mm, MinLength_mm, MaxLength_mm)) %>%
+          filter(is.na(match_flag) | match_flag) %>% # keep NA and matching intervals
+          group_by(row_id) %>%  # resolve overlaps per original row
+          slice_head(n = 1) %>%  # pick the first match for that fish
+          ungroup() %>%
+          select(-c(match_flag, row_id, MinLength_mm, MaxLength_mm))
+        }## IF ~ fn_ageclass
 
       ## Munge ----
 
