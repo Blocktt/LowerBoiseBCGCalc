@@ -245,6 +245,16 @@ shinyServer(function(input, output) {
                 , multiple = FALSE)
   })## UI_colnames
 
+  output$UI_taxatrans_user_col_length <- renderUI({
+    req(input$taxatrans_pick_official == "Lower Boise BCG (Fish)")
+    req(df_import())
+    selectInput(inputId = "taxatrans_user_col_length"
+                , label   = "Column, Length (e.g., Length_mm)"
+                , choices = c("", names(df_import()))
+                , selected = "Length_mm"
+                , multiple = FALSE)
+    })## UI_colnames
+
   ## b_Calc_TaxaTrans ----
   observeEvent(input$b_calc_taxatrans, {
     shiny::withProgress({
@@ -334,6 +344,8 @@ shinyServer(function(input, output) {
       col_taxaid_attr <- df_pick_taxoff[df_pick_taxoff$project == sel_proj
                                         , "attributes_taxaid"]
 
+      sel_user_length <- input$taxatrans_user_col_length
+
       fn_ageclass <- df_pick_taxoff[df_pick_taxoff$project == sel_proj
                                             , "ageclass_filename"]
       col_taxaid_ageclass <- df_pick_taxoff[df_pick_taxoff$project == sel_proj
@@ -352,7 +364,8 @@ shinyServer(function(input, output) {
                                                               , sel_user_sampid
                                                               , sel_user_taxaid
                                                               , sel_user_ntaxa
-                                                              , sel_user_indexclass)]
+                                                              , sel_user_indexclass
+                                                              , sel_user_length)]
       # flip to col_drop
       user_col_drop <- names(df_input)[!names(df_input) %in% user_col_keep]
 
@@ -539,18 +552,17 @@ shinyServer(function(input, output) {
                                                        , trim_ws = TRUE
                                                        , match_caps = TRUE)
 
+      ### Age class ####
       if (!is.null(fn_ageclass)) {
-        taxaid_official_project <- "TaxaID"
-        col_taxaid_ageclass <- "TAXAID"
-
         taxatrans_results$merge <- taxatrans_results$merge %>%
           mutate(row_id = row_number()) %>%  # create row id BEFORE the join
           left_join(df_ageclass %>% select(any_of(col_taxaid_ageclass)
                                            , MinLength_mm, MaxLength_mm
                                            , AgeClass, AgeClass_text)
                     , by = setNames(col_taxaid_ageclass
-                                    , taxaid_official_project)) %>%
-          mutate(match_flag = dplyr::between(Length_mm, MinLength_mm, MaxLength_mm)) %>%
+                                    , "TaxaID")) %>%
+          mutate(match_flag = dplyr::between(as.numeric(.data[[sel_user_length]])
+                                             , MinLength_mm, MaxLength_mm)) %>%
           filter(is.na(match_flag) | match_flag) %>% # keep NA and matching intervals
           group_by(row_id) %>%  # resolve overlaps per original row
           slice_head(n = 1) %>%  # pick the first match for that fish
@@ -569,13 +581,26 @@ shinyServer(function(input, output) {
       if (!is.na(fn_taxoff_attr)) {
 
         df_ttrm <- taxatrans_results$merge
+        # Check if AgeClass exists; if not, add as numeric NA
+        if (!"AgeClass" %in% names(df_ttrm)) {
+          df_ttrm$AgeClass <- NA_real_
+        }
+
+        # Check if AgeClass_text exists; if not, add as character NA
+        if (!"AgeClass_text" %in% names(df_ttrm)) {
+          df_ttrm$AgeClass_text <- NA_character_
+        }
+
         # drop translation file columns
         col_keep_ttrm <- names(df_ttrm)[names(df_ttrm) %in% c(sel_user_sampid
                                                             , sel_user_taxaid
                                                             , sel_user_ntaxa
                                                             , "Match_Official"
                                                             , sel_user_groupby
-                                                            , sel_user_indexclass)]
+                                                            , sel_user_indexclass
+                                                            , sel_user_length
+                                                            , "AgeClass"
+                                                            , "AgeClass_text")]
         df_ttrm <- df_ttrm[, col_keep_ttrm]
 
         # merge with attributes
