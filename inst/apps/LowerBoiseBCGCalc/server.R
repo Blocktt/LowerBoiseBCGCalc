@@ -563,7 +563,8 @@ shinyServer(function(input, output) {
           mutate(row_id = row_number()) %>%  # create row id BEFORE the join
           left_join(df_ageclass %>% select(any_of(col_taxaid_ageclass)
                                            , MinLength_mm, MaxLength_mm
-                                           , AgeClass, AgeClass_text)
+                                           , .data[[var_AgeClass]]
+                                           , .data[[var_AgeClass_text]])
                     , by = setNames(col_taxaid_ageclass
                                     , sel_user_taxaid)) %>%
           mutate(match_flag = dplyr::between(as.numeric(.data[[sel_user_length]])

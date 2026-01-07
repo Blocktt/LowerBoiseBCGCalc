@@ -146,3 +146,5 @@ map_datatypes <- "BCG"
 #                                              , skip = 7))
 
 # Age Class ----
+var_AgeClass <- "AgeClass"
+var_AgeClass_text <- "AgeClass_text"

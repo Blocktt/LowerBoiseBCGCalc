@@ -1,6 +1,6 @@
 ---
 title: "About_1About"
-date: "2024-07-31"
+date: "2026-01-07"
 output: html_fragment
 editor_options: 
   markdown: 
@@ -17,8 +17,8 @@ knitr::opts_chunk$set(echo = FALSE
 # About
 
 This R-based tool calculates Biological Condition Gradient (BCG) scores
-for macroinvertebrate and fish assemblages in Great Plains streams in
-Iowa, Missouri, Nebraska, Kansas and Oklahoma.
+for macroinvertebrate and fish assemblages at sites on the Lower Boise
+River in Idaho.
 
 Users do not need R on their computers to run the app, nor do they need
 to have any familiarity with R.
@@ -34,7 +34,7 @@ For those who prefer to work with R, the functions are carried out by
 the
 <a href="https://github.com/leppott/BCGcalc" target="_blank">BCGcalc</a>
 and
-<a href="https://github.com/leppott/BioMonTools" target="_blank">BioMonTools</a>
+<a href="https://cran.r-project.org/web/packages/BioMonTools/index.html" target="_blank">BioMonTools</a>
 R packages, which are available on GitHub and were developed by Erik W.
 Leppo from Tetra Tech ([Erik.Leppo\@tetratech.com](#0)).
 
@@ -44,12 +44,7 @@ the necessary packages.
 
 IMPORTANT: The BCG models were calibrated with data collected using
 specific field and laboratory protocols. When applying the models, make
-sure you are applying them to the correct type of data. For example, the
-Kansas macroinvertebrate model should only be applied to data collected
-and processed with Kansas Department of Health and Environment (KDHE)
-methods and the Missouri model should only be applied to data collected
-and processed with Missouri Department of Natural Resources (MO DNR)
-methods.
+sure you are applying them to the correct type of data.
 
 ------------------------------------------------------------------------
 

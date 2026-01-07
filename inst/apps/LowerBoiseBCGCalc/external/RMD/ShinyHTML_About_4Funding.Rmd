@@ -1,6 +1,6 @@
 ---
 title: "About_4Funding"
-date: "20224-07-02"
+date: "2025-01-07"
 output: html_fragment
 editor_options: 
   markdown: 
@@ -16,9 +16,10 @@ knitr::opts_chunk$set(echo = FALSE
 
 # Funding
 
-Development of this Shiny app was funded by the United States
-Environmental Protection Agency (EPA) Office of Office of Science and
-Technology (OST) (lead EPA OST scientist: Susan Jackson).
+Development of this Shiny app was funded by the City of Boise Public
+Works as part of the Enhance the River Project.
+
+![](images/citylogo_official.png){width="244"}
 
 ------------------------------------------------------------------------
 

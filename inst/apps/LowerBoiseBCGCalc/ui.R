@@ -8,13 +8,13 @@
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 dashboardPage(
-  header = dashboardHeader(title = "BCGcalc - Great Plains", titleWidth = 300)
+  header = dashboardHeader(title = "BCGcalc - Lower Boise", titleWidth = 300)
   , sidebar = dashboardSidebar(db_main_sb("leftsidebarmenu"))
   , body = dashboardBody(tags$style(HTML("/* Target the 'body' tag inside your RMarkdown content */
       body {font-size: 16px;}"))
       , db_main_body("dbBody"))
   , footer = dashboardFooter(left = pkg_version
-                             , right = "https://github.com/Blocktt/GreatPlainsBCGCalc")
+                             , right = "https://github.com/Blocktt/LowerBoiseBCGCalc")
 ) ## dashboardPage ~ END
 
 # https://rstudio.github.io/shinydashboard/get_started.html

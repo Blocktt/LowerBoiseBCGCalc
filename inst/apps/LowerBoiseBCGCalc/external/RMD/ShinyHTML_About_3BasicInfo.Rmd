@@ -1,6 +1,6 @@
 ---
 title: "About_3BasicInfo"
-date: "2024-07-31"
+date: "2026-01-07"
 output: html_fragment
 editor_options: 
   markdown: 
@@ -23,8 +23,8 @@ Failure to run: When the Shiny app fails to run, the screen will gray
 out and the message ‘disconnected from the server’ will appear. The
 problem typically stems from a formatting issue with the input file.
 Check your input file, refresh the app and try again. If you still have
-problems, contact Erik W. Leppo
-([Erik.Leppo\@tetratech.com](mailto:Erik.Leppo@tetratech.com){.email})
+problems, contact Ben Block
+([Ben.Block\@tetratech.com](mailto:Ben.Block@tetratech.com){.email})
 and request assistance. Be prepared to share a copy of your input
 file(s) and the error message.
 
