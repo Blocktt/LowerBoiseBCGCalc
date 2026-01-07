@@ -554,13 +554,18 @@ shinyServer(function(input, output) {
 
       ### Age class ####
       if (!is.null(fn_ageclass)) {
+        print(setNames(col_taxaid_ageclass, sel_user_taxaid))
+        print(names(df_ageclass))
+        print(names(taxatrans_results$merge))
+
+
         taxatrans_results$merge <- taxatrans_results$merge %>%
           mutate(row_id = row_number()) %>%  # create row id BEFORE the join
           left_join(df_ageclass %>% select(any_of(col_taxaid_ageclass)
                                            , MinLength_mm, MaxLength_mm
                                            , AgeClass, AgeClass_text)
                     , by = setNames(col_taxaid_ageclass
-                                    , "TaxaID")) %>%
+                                    , sel_user_taxaid)) %>%
           mutate(match_flag = dplyr::between(as.numeric(.data[[sel_user_length]])
                                              , MinLength_mm, MaxLength_mm)) %>%
           filter(is.na(match_flag) | match_flag) %>% # keep NA and matching intervals
@@ -686,7 +691,7 @@ shinyServer(function(input, output) {
                             , TranslationTable = fn_taxoff
                             , AttributeTable = fn_taxoff_attr)
       # fn_part <- paste0("_", abr_filebuilder, "_0taxasource", ".csv")
-      fn_part <- "BCG_TaxaTranslator_source.csv"
+      fn_part <- "BCG_TaxaTranslator_sources.csv"
       write.csv(df_save
                 , file.path(path_results_sub, fn_part)
                 , row.names = FALSE)
@@ -714,10 +719,16 @@ shinyServer(function(input, output) {
       file.copy(temp_taxoff_attr_meta
                 , file.path(path_results_ref, fn_taxoff_attr_meta))
 
+      ## Taxa Age Classes
+      if (!is.null(fn_ageclass)) {
+        file.copy(temp_ageclass
+                  , file.path(path_results_ref, fn_ageclass))
+      } # END ~ if
+
       ## translate - crosswalk
       df_save <- taxatrans_results$taxatrans_unique # df_taxoff_meta
       # fn_part <- paste0(fn_abr_save, "2taxamatch", ".csv")
-      fn_part <- "BCG_TaxaTranslator_modify.csv"
+      fn_part <- "BCG_TaxaTranslator_modifications.csv"
       write.csv(df_save
                 , file.path(path_results_sub, fn_part)
                 , row.names = FALSE)
@@ -726,7 +737,7 @@ shinyServer(function(input, output) {
       ## Non Match
       df_save <- data.frame(taxatrans_results$nonmatch)
       # fn_part <- paste0(fn_abr_save, "3nonmatch", ".csv")
-      fn_part <- "BCG_TaxaTranslator_nonmatch.csv"
+      fn_part <- "BCG_TaxaTranslator_nonmatches.csv"
       write.csv(df_save
                 , file.path(path_results_sub, fn_part)
                 , row.names = FALSE)
@@ -735,7 +746,7 @@ shinyServer(function(input, output) {
       ## Taxa Trans
       df_save <- taxatrans_results$merge
       # fn_part <- paste0(fn_abr_save, "4taxaattr", ".csv")
-      fn_part <- "BCG_TaxaTranslator_TAXAATTR.csv"
+      fn_part <- "BCG_TaxaTranslator_Results_wAttributes.csv"
       write.csv(df_save
                 , file.path(path_results_sub, fn_part)
                 , row.names = FALSE)

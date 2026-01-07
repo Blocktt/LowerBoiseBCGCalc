@@ -144,3 +144,5 @@ map_datatypes <- "BCG"
 # map_meta <- as.data.frame(readxl::read_excel(file.path(path_data, fn_map_meta)
 #                                              , sheet = "field_names"
 #                                              , skip = 7))
+
+# Age Class ----
