@@ -21,6 +21,11 @@ knitr::opts_chunk$set(
 cat(paste0("Last Update: ",Sys.time()))
 ```
 
+# LowerBoiseBCGCalc 0.0.0.9007 (2026-05-20)
+
+* refactor: Update age class xtab for RIS == TRUE
+* refactor: Add membership xtab to BCG results
+
 # LowerBoiseBCGCalc 0.0.0.9006 (2026-05-20)
 
 * fix: Update BCGcalc package for update to Fish Main_Exckert rules

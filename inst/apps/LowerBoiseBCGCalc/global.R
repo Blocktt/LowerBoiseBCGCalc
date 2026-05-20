@@ -1,7 +1,7 @@
 # Shiny Global File
 
 # Version ----
-pkg_version <- "0.0.0.9006"
+pkg_version <- "0.0.0.9007"
 
 # Packages----
 library(BCGcalc)
@@ -27,6 +27,7 @@ library(openxlsx)
 library(leaflet)
 library(kableExtra)
 library(rsconnect)
+library(tidyr) # pivot
 
 # \_tests\CheckDependencies.R
 

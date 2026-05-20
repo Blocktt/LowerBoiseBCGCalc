@@ -617,7 +617,8 @@ shinyServer(function(input, output) {
 
 
         taxatrans_results$merge <- taxatrans_results$merge %>%
-          mutate(row_id = row_number()) %>%  # create row id BEFORE the join
+          # create row id BEFORE the join
+          mutate(row_id = row_number()) %>%
           left_join(df_ageclass %>% select(any_of(col_taxaid_ageclass)
                                            , MinLength_mm, MaxLength_mm
                                            , .data[[var_AgeClass]]
@@ -626,9 +627,12 @@ shinyServer(function(input, output) {
                                     , sel_user_taxaid)) %>%
           mutate(match_flag = dplyr::between(as.numeric(.data[[sel_user_length]])
                                              , MinLength_mm, MaxLength_mm)) %>%
-          filter(is.na(match_flag) | match_flag) %>% # keep NA and matching intervals
-          group_by(row_id) %>%  # resolve overlaps per original row
-          slice_head(n = 1) %>%  # pick the first match for that fish
+          # keep NA and matching intervals
+          filter(is.na(match_flag) | match_flag) %>%
+          # resolve overlaps per original row
+          group_by(row_id) %>%
+          # pick the first match for that fish
+          slice_head(n = 1) %>%
           ungroup() %>%
           select(-c(match_flag, row_id, MinLength_mm, MaxLength_mm))
 
@@ -744,6 +748,8 @@ shinyServer(function(input, output) {
       # 20260520
       if (!is.null(fn_ageclass)) {
         taxatrans_results$xtab_ac <- taxatrans_results$merge |>
+          # filter for RIS
+          dplyr::filter(RIS == TRUE) |>
           # calculate sums by sample and taxon
           dplyr::group_by(SampleID, COMMONNAME, AgeClass) |>
           dplyr::summarize(N_Taxa_SUM = sum(N_Taxa, na.rm = TRUE),
@@ -1820,6 +1826,38 @@ shinyServer(function(input, output) {
       dn_metflags <- path_results_sub
       pn_metflags <- file.path(dn_metflags, fn_metflags)
       write.csv(df_metflags, pn_metflags, row.names = FALSE)
+
+
+      ## 8. Metmemb xtab -----
+      # 2026-05-20
+      df_metmemb_xtab <- df_results |>
+        # cols to keep
+        dplyr::select(SampleID, BCG_Status2, NumFlags) |>
+        # join tables
+        dplyr::left_join(y = df_metmemb |>
+                           dplyr::select(SAMPLEID,
+                                         METRIC_NAME,
+                                         DESCRIPTION,
+                                         METRIC_VALUE,
+                                         LEVEL,
+                                         MEMBERSHIP),
+                         by = dplyr::join_by(SampleID == SAMPLEID)) |>
+        # pivot
+        tidyr::pivot_wider(id_cols = c(SampleID,
+                                       BCG_Status2,
+                                       NumFlags,
+                                       METRIC_NAME,
+                                       DESCRIPTION,
+                                       METRIC_VALUE),
+                           names_from = LEVEL,
+                           values_from = MEMBERSHIP,
+                           names_sort = TRUE,
+                           names_prefix = "L")
+      # save
+      fn_metmemb_xtab <- "BCG_3metmemb_xtab.csv"
+      dn_metmemb_xtab <- path_results_sub
+      pn_metmemb_xtab <- file.path(dn_metmemb_xtab, fn_metmemb_xtab)
+      write.csv(df_metmemb_xtab, pn_metmemb_xtab, row.names = FALSE)
 
 
       ## Calc, 9, RMD----
