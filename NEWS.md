@@ -1,11 +1,29 @@
 LowerBoiseBCGCalc-NEWS
 ================
 <Ben.Block@tetratech.com>
-2026-01-02 16:18:29.043519
+2026-05-20 10:32:28.160599
 
 <!-- NEWS.md is generated from NEWS.Rmd. Please edit that file -->
 
-    #> Last Update: 2026-01-02 16:18:29.064723
+    #> Last Update: 2026-05-20 10:32:28.232507
+
+# LowerBoiseBCGCalc 0.0.0.9004 (2026-05-20)
+
+- docs: Add missing packages to global.R
+  - kableExtra
+  - rsconnect
+
+# LowerBoiseBCGCalc 0.0.0.9003 (2026-05-20)
+
+- refactor: Update version number to global
+- refactor: Use revised versions of packages
+  - BioMonTools
+  - BCGcalc
+- docs: Add “\_tests” folder
+- docs: Add “\_tests” folder to gitignore
+- refactor: Update error catching for mismatch or blank Index_Name
+  - Bugs and Fish
+  - FileBuilder and BCG Calculation
 
 # LowerBoiseBCGCalc 0.0.0.9002 (2026-02-01)
 
