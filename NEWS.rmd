@@ -21,6 +21,10 @@ knitr::opts_chunk$set(
 cat(paste0("Last Update: ",Sys.time()))
 ```
 
+# LowerBoiseBCGCalc 0.0.0.9008 (2026-05-20)
+
+* docs: Add shiny app URL to readme
+
 # LowerBoiseBCGCalc 0.0.0.9007 (2026-05-20)
 
 * refactor: Update age class xtab for RIS == TRUE

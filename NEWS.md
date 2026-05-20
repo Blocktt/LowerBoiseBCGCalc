@@ -1,17 +1,24 @@
 LowerBoiseBCGCalc-NEWS
 ================
 <Ben.Block@tetratech.com>
-2026-05-20 16:41:14.332586
+2026-05-20 17:07:19.988813
 
 <!-- NEWS.md is generated from NEWS.Rmd. Please edit that file -->
 
-    #> Last Update: 2026-05-20 16:41:14.455511
+    #> Last Update: 2026-05-20 17:07:20.043326
+
+# LowerBoiseBCGCalc 0.0.0.9008 (2026-05-20)
+
+- docs: Add shiny app URL to readme
+
+# LowerBoiseBCGCalc 0.0.0.9007 (2026-05-20)
+
+- refactor: Update age class xtab for RIS == TRUE
+- refactor: Add membership xtab to BCG results
 
 # LowerBoiseBCGCalc 0.0.0.9006 (2026-05-20)
 
 - fix: Update BCGcalc package for update to Fish Main_Exckert rules
-- refactor: Update age class xtab for RIS == TRUE
-- refactor: Add membership xtab to BCG results
 
 # LowerBoiseBCGCalc 0.0.0.9005 (2026-05-20)
 
