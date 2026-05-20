@@ -358,19 +358,7 @@ shinyServer(function(input, output) {
       dir_proj_results <- df_pick_taxoff[df_pick_taxoff$project == sel_proj
                                          , "dir_results"]
 
-      # include = yes; unique(sel_user_groupby)
-      # include sampid, taxaid, and n_taxa so not dropped
-      user_col_keep <- names(df_input)[names(df_input) %in% c(sel_user_groupby
-                                                              , sel_user_sampid
-                                                              , sel_user_taxaid
-                                                              , sel_user_ntaxa
-                                                              , sel_user_indexclass
-                                                              , sel_user_length)]
-      # flip to col_drop
-      user_col_drop <- names(df_input)[!names(df_input) %in% user_col_keep]
-
-      # Fun Param, Test
-
+      ### Index Name (proj) ----
       if (sel_proj == "") {
         # end process with pop up
         msg <- "'Calculation' is missing!"
@@ -379,8 +367,69 @@ shinyServer(function(input, output) {
                                , type = "error"
                                , closeOnEsc = TRUE
                                , closeOnClickOutside = TRUE)
-        # validate(msg)
-      }## IF ~ sel_proj
+        validate(msg)
+    # } else if (sel_proj == "Lower Boise BCG (Bugs)") {
+    #   if(!"INDEX_NAME" %in% toupper(names(df_input))) {
+    #     col_indexname <- "INDEX_NAME"
+    #   } else {
+    #     col_indexname <- names(df_input)[toupper(names(df_input)) == "INDEX_NAME"]
+    #   } ## IF ~ INDEX_NAME
+    #   df_input[, col_indexname] <- indexname_lbr_bugs
+    # } else if (sel_proj == "Lower Boise BCG (Fish)") {
+    #   if(!"INDEX_NAME" %in% toupper(names(df_input))) {
+    #     col_indexname <- "INDEX_NAME"
+    #   } else {
+    #     col_indexname <- names(df_input)[toupper(names(df_input)) == "INDEX_NAME"]
+    #   } ## IF ~ INDEX_NAME
+    #   df_input[, col_indexname] <- indexname_lbr_fish
+      } else {
+
+        ## column, Index_Name
+        if(!"INDEX_NAME" %in% toupper(names(df_input))) {
+          col_indexname <- "INDEX_NAME"
+        } else {
+          col_indexname <- names(df_input)[toupper(names(df_input)) == "INDEX_NAME"]
+        } ## IF ~ INDEX_NAME
+
+        # Check before set
+        # if blank do nothing
+        user_file_indexname_value <- unique(df_input[, col_indexname])[1]
+        if (!grepl(toupper(sel_proj), toupper(user_file_indexname_value))) {
+          # end process with pop up
+          msg <- "'Community' doesn't match Index_Name in data!"
+          shinyalert::shinyalert(title = "BCG Calculation"
+                                 , text = msg
+                                 , type = "error"
+                                 , closeOnEsc = TRUE
+                                 , closeOnClickOutside = TRUE)
+          validate(msg)
+        }## ShinyAlert ~ index_name vs. community
+
+        ## value, Index_Name
+        # ok to overwrite at this point
+        if (sel_proj == "Bugs") {
+          df_input[, col_indexname] <- indexname_lbr_bugs
+        } else if (sel_proj == "Fish") {
+          df_input[, col_indexname] <- indexname_lbr_fish
+        }## IF ~ sel_proj_2
+
+
+
+      }## IF ~ sel_proj_1
+
+      # include = yes; unique(sel_user_groupby)
+      # include sampid, taxaid, and n_taxa so not dropped
+      user_col_keep <- names(df_input)[names(df_input) %in% c(sel_user_groupby
+                                                              , sel_user_sampid
+                                                              , sel_user_taxaid
+                                                              , sel_user_ntaxa
+                                                              , col_indexname
+                                                              , sel_user_indexclass
+                                                              , sel_user_length)]
+      # flip to col_drop
+      user_col_drop <- names(df_input)[!names(df_input) %in% user_col_keep]
+
+      # Fun Param, Test
 
       if (is.na(fn_taxoff_meta) | fn_taxoff_meta == "") {
         # set value to NULL
@@ -416,16 +465,11 @@ shinyServer(function(input, output) {
 
       # Different result subfolder based on project (bugs/fish)
       # 2024-01-12
-      if (sel_proj == "Great Plains BCG (Fish)") {
+      if (sel_proj == "Lower Boise BCG (Bugs)") {
+        dir_proj_results <- paste("Bugs", dir_proj_results, sep = "_")
+      } else if (sel_proj == "Lower Boise BCG (Bugs)") {
         dir_proj_results <- paste("Fish", dir_proj_results, sep = "_")
-      } else if (sel_proj == "Great Plains BCG (IA Bugs)") {
-        dir_proj_results <- paste("Bugs_IA", dir_proj_results, sep = "_")
-      } else if (sel_proj == "Great Plains BCG (KS Bugs)") {
-        dir_proj_results <- paste("Bugs_KS", dir_proj_results, sep = "_")
-      } else if (sel_proj == "Great Plains BCG (MO Bugs)") {
-        dir_proj_results <- paste("Bugs_MO", dir_proj_results, sep = "_")
-      } else if (sel_proj == "Great Plains BCG (NE Bugs)") {
-        dir_proj_results <- paste("Bugs_NE", dir_proj_results, sep = "_")
+
       } ## IF ~ sel_proj
 
       dn_files <- paste(abr_results, dir_proj_results, sep = "_")
@@ -503,6 +547,10 @@ shinyServer(function(input, output) {
       }## IF ~ fn_taxaoff_meta
 
       ## Data, Official Fish Age Class----
+      if (is.na(fn_ageclass) | fn_ageclass == "") {
+        fn_ageclass <- NULL
+      }## IF ~ fn_ageclass ~ NA or ""
+
       if (!is.null(fn_ageclass)) {
         url_ageclass <- file.path(url_bmt_base
                                           , "taxa_official"
@@ -512,7 +560,7 @@ shinyServer(function(input, output) {
         httr::GET(url_ageclass, write_disk(temp_ageclass))
 
         df_ageclass <- read.csv(temp_ageclass)
-      }## IF ~ fn_ageclass
+      }## IF ~ fn_ageclass ~ NULL
 
 
       ## Calc, 03, Run Function ----
@@ -674,8 +722,13 @@ shinyServer(function(input, output) {
                                                      , TRUE)
       }## IF ~ Noteworthy
 
+      ### Index_Name (output)----
       # need index class brought through
-
+      if (sel_proj == "Lower Boise BCG (Bugs)") {
+        taxatrans_results$merge[, col_indexname] <- indexname_lbr_bugs
+      } else if (sel_proj == "Lower Boise BCG (Fish)") {
+        taxatrans_results$merge[, col_indexname] <- indexname_lbr_fish
+      }## IF ~ sel_proj
 
       ## Calc, 04, Save Results ----
       prog_detail <- "Save Results"
@@ -779,6 +832,7 @@ shinyServer(function(input, output) {
       # time, end
       toc <- Sys.time()
       duration <- difftime(toc, tic)
+      duration
 
       # pop up
       # Inform user about number of taxa mismatches
@@ -1357,31 +1411,75 @@ shinyServer(function(input, output) {
       # QC, FAIL if TRUE
       if (is.null(df_input)) {
         return(NULL)
-      }
+        # end process with pop up
+        msg <- "'Import File' missing!"
+        shinyalert::shinyalert(title = "No Import File"
+                               , text = msg
+                               , type = "error"
+                               , closeOnEsc = TRUE
+                               , closeOnClickOutside = TRUE)
+        # validate(msg)
+      }## IF ~ is.null ~ df_input
 
       # QC, names to upper case
       names(df_input) <- toupper(names(df_input))
 
-      # QC, Index_Name
+      ### QC, Index_Name----
       my_comm <- input$si_community
-      if ((!"INDEX_NAME" %in% toupper(names(df_input))) & (my_comm == "Fish")) {
-        df_input[, "INDEX_NAME"] <- "GP_Fish_BCG"
-      } else if ((!"INDEX_NAME" %in% toupper(names(df_input))) & (my_comm == "Bugs_IA")) {
-        df_input[,"INDEX_NAME"] <- "IA_Bugs_BCG"
-      } else if ((!"INDEX_NAME" %in% toupper(names(df_input))) & (my_comm == "Bugs_KS")) {
-        df_input[,"INDEX_NAME"] <- "KS_Bugs_BCG"
-      } else if ((!"INDEX_NAME" %in% toupper(names(df_input))) & (my_comm == "Bugs_MO")) {
-        df_input[,"INDEX_NAME"] <- "MO_Bugs_BCG"
-      } else if ((!"INDEX_NAME" %in% toupper(names(df_input))) & (my_comm == "Bugs_NE")) {
-        df_input[,"INDEX_NAME"] <- "NE_Bugs_BCG"
-      }## IF ~ INDEX_NAME
+
+      if (my_comm == "") {
+        # end process with pop up
+        msg <- "'Community' blank!"
+        shinyalert::shinyalert(title = "BCG Calculation"
+                               , text = msg
+                               , type = "error"
+                               , closeOnEsc = TRUE
+                               , closeOnClickOutside = TRUE)
+        validate(msg)
+      }## ShinyAlert ~ community blank
+
+
+      ## column, Index_Name
+      if(!"INDEX_NAME" %in% names(df_input)) {
+        col_indexname <- "INDEX_NAME"
+      } else {
+        col_indexname <- names(df_input)[names(df_input) == "INDEX_NAME"]
+      } ## IF ~ INDEX_NAME
+
+      # Check before set
+      # if blank do nothing
+      user_file_indexname_value <- unique(df_input[, col_indexname])[1]
+      if (!grepl(toupper(my_comm), toupper(user_file_indexname_value))) {
+        # end process with pop up
+        msg <- "'Community' doesn't match Index_Name in data!"
+        shinyalert::shinyalert(title = "BCG Calculation"
+                               , text = msg
+                               , type = "error"
+                               , closeOnEsc = TRUE
+                               , closeOnClickOutside = TRUE)
+        validate(msg)
+      }## ShinyAlert ~ index_name vs. community
+
+
+
+
+      ## value, Index_Name
+      if (my_comm == "Bugs") {
+        df_input[, col_indexname] <- indexname_lbr_bugs
+      } else if (my_comm == "Fish") {
+        df_input[, col_indexname] <- indexname_lbr_fish
+      }## IF ~ my_comm
 
       # QC, BMT community
-      if (startsWith(my_comm, "Bugs_")) {
+      if (my_comm == "Bugs") {
         BMT_comm <- "bugs"
       } else {
         BMT_comm <- "fish"
-      }
+      }## IF ~ BMT_comm
+
+
+
+
 
       ## Calc, 2, Exclude Taxa ----
       prog_detail <- "Calculate, Exclude Taxa"
@@ -1495,162 +1593,18 @@ shinyServer(function(input, output) {
       } #END ~ if
 
       # Metric calculation
-      ## Split calculation methods for Quant/Qual for IA and MO
 
-      ## Quant vs. Qual ----
-      # Metric Names
-      df_metnames_xl <- readxl::read_excel(system.file("extdata/MetricNames.xlsx"
-                                                    , package = "BioMonTools")
-                                        , sheet = "MetricMetadata"
-                                        , skip = 4
-                                        , guess_max = 10^6)
-      # Metric Names by Large-Rare TRUE/FALSE
-      metnames_lr_t <- df_metnames_xl[df_metnames_xl[, "Bugs_LargeRare"] == TRUE
-                                      , "METRIC_NAME", TRUE]  #303
-      metnames_lr_f <- df_metnames_xl[df_metnames_xl[, "Bugs_LargeRare"] == FALSE
-                                      , "METRIC_NAME", TRUE] #218
+      fun_cols2keep <- NULL
 
-       # calc for different methods
-      if (length(cols_flags_keep) > 0) {
-        # keep extra cols from Flags (non-metric)
-        fun_cols2keep <- cols_flags_keep
-      } else {
-        fun_cols2keep <- NULL
-      }## IF ~ length(col_rules_keep)
-
-      count_lr <- 999
-      # N_TAXA; blank, na, 0, -99 to 999
-      df_input <- df_input %>%
-        dplyr::mutate(N_TAXA = dplyr::case_when(N_TAXA <= 0 ~ count_lr
-                                                , is.na(N_TAXA) ~ count_lr
-                                                , N_TAXA == "" ~ count_lr
-                                                , .default = N_TAXA
-        ))## mutate ~ case_when
-
-      #
-      if (my_comm == "Bugs_IA") {
-        msg <- paste0("Index_Name, ", my_comm)
-        message(msg)
-
-        # Check if missing BUGGEAR
-        boo_buggear <- "BUGGEAR" %in% toupper(names(df_input))
-        if (!boo_buggear) {
-          # pop up
-          msg <- "Column is missing (IA data only, BUGGEAR)!"
-          shinyalert::shinyalert(title = "BCG Calculation Error"
-                                 , text = msg
-                                 , type = "error"
-                                 , closeOnEsc = TRUE
-                                 , closeOnClickOutside = TRUE)
-          validate(msg)
-        }## IF ~ boo_buggear
-
-
-
-
-
-        # create LR TRUE and LR FALSE datasets
-        df_input_lr_t <- df_input
-        df_input_lr_f <- df_input %>%
-          dplyr::mutate(BUGGEAR_UC = toupper(BUGGEAR)) %>%
-          dplyr::filter(BUGGEAR_UC != "QUALITATIVE")
-        msg <- paste0("Data, Qual, dim = ", paste(dim(df_input_lr_t), collapse = ", "))
-        message(msg)
-        msg <- paste0("Data, Quant, dim = ", paste(dim(df_input_lr_f), collapse = ", "))
-        message(msg)
-        # calc
-        if (nrow(df_input_lr_t) == 0) {
-          # no large-rare samples so run on 'all' data
-          df_metval <- BioMonTools::metric.values(df_input
-                                          , fun.Community = BMT_comm
-                                          , fun.MetricNames = metnames_lr_f
-                                          , fun.cols2keep = fun_cols2keep
-                                          , boo.Shiny = TRUE
-                                          , verbose = TRUE
-                                          , taxaid_dni = "DNI")
-
-          } else {
-
-          df_metval_lr_t <- BioMonTools::metric.values(df_input_lr_t
-                                          , fun.Community = BMT_comm
-                                          , fun.MetricNames = metnames_lr_t
-                                          , fun.cols2keep = fun_cols2keep
-                                          , boo.Shiny = TRUE
-                                          , verbose = TRUE
-                                          , taxaid_dni = "DNI")
-          df_metval_lr_f <- BioMonTools::metric.values(df_input_lr_f
-                                          , fun.Community = BMT_comm
-                                          , fun.MetricNames = metnames_lr_f
-                                          , fun.cols2keep = fun_cols2keep
-                                          , boo.Shiny = TRUE
-                                          , verbose = TRUE
-                                          , taxaid_dni = "DNI")
-          # merge
-          # drop ni_total (default) from lr_t
-          df_metval <- merge(df_metval_lr_t[, !(names(df_metval_lr_t) %in% "ni_total")]
-                             , df_metval_lr_f
-                             , by = c("SAMPLEID", "INDEX_NAME", "INDEX_CLASS"))
-        }## IF ~ nrow(df_input_lr_t)
-      #
-      } else if (my_comm == "Bugs_MO") {
-        msg <- paste0("Index_Name, ", my_comm)
-        message(msg)
-
-        # create LR TRUE and LR FALSE datasets
-        df_input_lr_t <- df_input
-        df_input_lr_f <- df_input %>%
-          dplyr::filter(N_TAXA != count_lr)
-        msg <- paste0("Data, Qual, dim = ", paste(dim(df_input_lr_t), collapse = ", "))
-        message(msg)
-        msg <- paste0("Data, Quant, dim = ", paste(dim(df_input_lr_f), collapse = ", "))
-        message(msg)
-
-        if (nrow(df_input_lr_t) == 0) {
-          # no large-rare samples so run on 'all' data
-          df_metval <- BioMonTools::metric.values(df_input
-                                                  , fun.Community = BMT_comm
-                                                  , fun.MetricNames = metnames_lr_f
-                                                  , fun.cols2keep = fun_cols2keep
-                                                  , boo.Shiny = TRUE
-                                                  , verbose = TRUE
-                                                  , taxaid_dni = "DNI")
-
-        } else {
-
-          df_metval_lr_t <- metric.values(df_input_lr_t
-                                          , fun.Community = BMT_comm
-                                          , fun.MetricNames = metnames_lr_t
-                                          , fun.cols2keep = fun_cols2keep
-                                          , boo.Shiny = TRUE
-                                          , verbose = TRUE
-                                          , taxaid_dni = "DNI")
-          df_metval_lr_f <- BioMonTools::metric.values(df_input_lr_f
-                                                       , fun.Community = BMT_comm
-                                                       , fun.MetricNames = metnames_lr_f
-                                                       , fun.cols2keep = fun_cols2keep
-                                                       , boo.Shiny = TRUE
-                                                       , verbose = TRUE
-                                                       , taxaid_dni = "DNI")
-          # merge
-          # drop ni_total (default) from lr_t
-          df_metval <- merge(df_metval_lr_t[, !(names(df_metval_lr_t) %in% "ni_total")]
-                             , df_metval_lr_f
-                             , by = c("SAMPLEID", "INDEX_NAME", "INDEX_CLASS"))
-        }## IF ~ nrow(df_input_lr_t)
-
-
-      } else {
-        msg <- paste0("Index_Name, ", "NOT IA or MO.")
-        message(msg)
-        df_metval <- BioMonTools::metric.values(df_input
-                                                , BMT_comm
-                                                , fun.cols2keep = fun_cols2keep
-                                                , boo.Shiny = TRUE
-                                                , verbose = TRUE
-                                                , taxaid_dni = "DNI")
-      }## IF ~ my_comm
-
-
+      # Metric Values
+      msg <- paste0("Community, ", BMT_comm)
+      message(msg)
+      df_metval <- BioMonTools::metric.values(df_input
+                                              , BMT_comm
+                                              , fun.cols2keep = fun_cols2keep
+                                              , boo.Shiny = TRUE
+                                              , verbose = TRUE
+                                              , taxaid_dni = "DNI")
 
       ### Save Results ----
 

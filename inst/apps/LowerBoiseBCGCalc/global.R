@@ -1,7 +1,7 @@
 # Shiny Global File
 
 # Version ----
-pkg_version <- "0.0.0.9000"
+pkg_version <- "0.0.0.9003"
 
 # Packages----
 library(BCGcalc)
@@ -148,3 +148,10 @@ map_datatypes <- "BCG"
 # Age Class ----
 var_AgeClass <- "AgeClass"
 var_AgeClass_text <- "AgeClass_text"
+
+# Index Name
+## bugs
+indexname_lbr_bugs <- "LBR_Bugs_BCG_v1"
+indexname_lbr_fish <- "LBR_Fish_BCG_v1"
+
+

@@ -21,6 +21,18 @@ knitr::opts_chunk$set(
 cat(paste0("Last Update: ",Sys.time()))
 ```
 
+# LowerBoiseBCGCalc 0.0.0.9003 (2026-05-20)
+
+* refactor: Update version number to global
+* refactor: Use revised versions of packages
+    + BioMonTools
+    + BCGcalc
+* docs: Add "_tests" folder
+* docs: Add "_tests" folder to gitignore
+* refactor: Update error catching for mismatch or blank Index_Name
+    + Bugs and Fish
+    + FileBuilder and BCG Calculation
+
 # LowerBoiseBCGCalc 0.0.0.9002 (2026-02-01)
 
 -   Added File Builder function to join fish lengths to age via lookup
