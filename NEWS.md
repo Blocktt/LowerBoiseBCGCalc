@@ -1,11 +1,15 @@
 LowerBoiseBCGCalc-NEWS
 ================
 <Ben.Block@tetratech.com>
-2026-05-20 11:31:31.066536
+2026-05-20 14:45:19.726182
 
 <!-- NEWS.md is generated from NEWS.Rmd. Please edit that file -->
 
-    #> Last Update: 2026-05-20 11:31:31.093724
+    #> Last Update: 2026-05-20 14:45:19.758743
+
+# LowerBoiseBCGCalc 0.0.0.9006 (2026-05-20)
+
+- fix: Update BCGcalc package for update to Fish Main_Exckert rules
 
 # LowerBoiseBCGCalc 0.0.0.9005 (2026-05-20)
 
