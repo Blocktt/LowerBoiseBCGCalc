@@ -391,10 +391,19 @@ shinyServer(function(input, output) {
           col_indexname <- names(df_input)[toupper(names(df_input)) == "INDEX_NAME"]
         } ## IF ~ INDEX_NAME
 
+        if (sel_proj == "Lower Boise BCG (Bugs)") {
+          my_comm <- indexname_lbr_bugs
+        } else if (sel_proj == "Lower Boise BCG (Fish)") {
+          my_comm <- indexname_lbr_fish
+        } else {
+          my_comm <- "ERROR"
+        }## IF ~ my_comm
+
+
         # Check before set
         # if blank do nothing
         user_file_indexname_value <- unique(df_input[, col_indexname])[1]
-        if (!grepl(toupper(sel_proj), toupper(user_file_indexname_value))) {
+        if (toupper(my_comm) != toupper(user_file_indexname_value)) {
           # end process with pop up
           msg <- "'Community' doesn't match Index_Name in data!"
           shinyalert::shinyalert(title = "BCG Calculation"
@@ -407,9 +416,9 @@ shinyServer(function(input, output) {
 
         ## value, Index_Name
         # ok to overwrite at this point
-        if (sel_proj == "Bugs") {
+        if (sel_proj == "Lower Boise BCG (Bugs)") {
           df_input[, col_indexname] <- indexname_lbr_bugs
-        } else if (sel_proj == "Fish") {
+        } else if (sel_proj == "Lower Boise BCG (Fish)") {
           df_input[, col_indexname] <- indexname_lbr_fish
         }## IF ~ sel_proj_2
 
@@ -622,6 +631,7 @@ shinyServer(function(input, output) {
           slice_head(n = 1) %>%  # pick the first match for that fish
           ungroup() %>%
           select(-c(match_flag, row_id, MinLength_mm, MaxLength_mm))
+
         }## IF ~ fn_ageclass
 
       ## Munge ----
@@ -729,6 +739,36 @@ shinyServer(function(input, output) {
       } else if (sel_proj == "Lower Boise BCG (Fish)") {
         taxatrans_results$merge[, col_indexname] <- indexname_lbr_fish
       }## IF ~ sel_proj
+
+      ### xtab, Age Class ----
+      # 20260520
+      if (!is.null(fn_ageclass)) {
+        taxatrans_results$xtab_ac <- taxatrans_results$merge |>
+          # calculate sums by sample and taxon
+          dplyr::group_by(SampleID, COMMONNAME, AgeClass) |>
+          dplyr::summarize(N_Taxa_SUM = sum(N_Taxa, na.rm = TRUE),
+                           .groups = "drop") |>
+          # mod AgeClass
+          dplyr::mutate(ac_mod = paste0("AgeClass_",
+                                        sprintf("%02d", as.integer(AgeClass)))) |>
+          # pivot wide (sort ageclass cols)
+          tidyr::pivot_wider(id_cols = c(SampleID, COMMONNAME),
+                             names_from = ac_mod,
+                             values_from = N_Taxa_SUM,
+                             values_fill = 0,
+                             names_sort = TRUE) |>
+          # sort cols (sample and taxon)
+          dplyr::arrange(SampleID, COMMONNAME)
+
+        # Save
+        df_save <- data.frame(taxatrans_results$xtab_ac)
+        # fn_part <- paste0(fn_abr_save, "3nonmatch", ".csv")
+        fn_part <- "BCG_TaxaTranslator_AgeClass_xtab.csv"
+        write.csv(df_save
+                  , file.path(path_results_sub, fn_part)
+                  , row.names = FALSE)
+        rm(df_save, fn_part)
+      }## IF ~ age_class
 
       ## Calc, 04, Save Results ----
       prog_detail <- "Save Results"

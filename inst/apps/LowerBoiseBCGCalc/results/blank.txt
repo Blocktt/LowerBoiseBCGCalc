@@ -1,0 +1,6 @@
+file to ensure directory not empty.
+
+RStudio does not copy to ShinyApps.io a directory that is empty.
+
+Erik.Leppo@tetratech.com
+2026-05-20

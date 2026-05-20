@@ -1,11 +1,16 @@
 LowerBoiseBCGCalc-NEWS
 ================
 <Ben.Block@tetratech.com>
-2026-05-20 10:32:28.160599
+2026-05-20 11:31:31.066536
 
 <!-- NEWS.md is generated from NEWS.Rmd. Please edit that file -->
 
-    #> Last Update: 2026-05-20 10:32:28.232507
+    #> Last Update: 2026-05-20 11:31:31.093724
+
+# LowerBoiseBCGCalc 0.0.0.9005 (2026-05-20)
+
+- refactor: Add cross tab table for age class to fish output for file
+  builder
 
 # LowerBoiseBCGCalc 0.0.0.9004 (2026-05-20)
 

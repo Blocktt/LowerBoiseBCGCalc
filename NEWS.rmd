@@ -21,6 +21,10 @@ knitr::opts_chunk$set(
 cat(paste0("Last Update: ",Sys.time()))
 ```
 
+# LowerBoiseBCGCalc 0.0.0.9005 (2026-05-20)
+
+* refactor: Add cross tab table for age class to fish output for file builder
+
 # LowerBoiseBCGCalc 0.0.0.9004 (2026-05-20)
 
 * docs: Add missing packages to global.R
