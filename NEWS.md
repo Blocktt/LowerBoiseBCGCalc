@@ -1,11 +1,16 @@
 LowerBoiseBCGCalc-NEWS
 ================
 <Ben.Block@tetratech.com>
-2026-05-21 09:51:51.057296
+2026-05-21 14:05:41.706821
 
 <!-- NEWS.md is generated from NEWS.Rmd. Please edit that file -->
 
-    #> Last Update: 2026-05-21 09:51:51.094123
+    #> Last Update: 2026-05-21 14:05:41.739949
+
+# LowerBoiseBCGCalc 0.0.0.9010 (2026-05-21)
+
+- refactor: Update UI
+  - Hide unwanted tabs
 
 # LowerBoiseBCGCalc 0.0.0.9009 (2026-05-21)
 

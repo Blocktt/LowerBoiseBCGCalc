@@ -15,33 +15,33 @@ function(id) {
                , tabName = "tab_about"
                , icon = icon("house")
                 )## menuItem ~ About ~ END
-      , menuItem(text = "Instructions"
-                 , tabName = "tab_instruct"
-                 , icon = icon("person-chalkboard")
-                 )## menuItem ~ Instructions ~ END
+      # , menuItem(text = "Instructions"
+      #            , tabName = "tab_instruct"
+      #            , icon = icon("person-chalkboard")
+      #            )## menuItem ~ Instructions ~ END
       , menuItem(text = "Import Files"
                  , tabName = "tab_import"
                  , icon = icon("file-arrow-up")
                  , startExpanded = TRUE
                  )## menuItem ~ Import ~ END
-      , menuItem(text = "Prepare Data"
+      , menuItem(text = "Prepare Input File"
                  , icon = icon("toolbox")
-                 , menuSubItem("Introduction"
-                               , tabName = "tab_filebuilder_intro"
-                               , icon = icon("info")
-                 )
+                 # , menuSubItem("Introduction"
+                 #               , tabName = "tab_filebuilder_intro"
+                 #               , icon = icon("info")
+                 # )
                  , menuSubItem("Within the App: File Builder"
                                , tabName = "tab_filebuilder_taxatrans"
                                , icon = icon("language")
                                )
-                 , menuSubItem("Outside the App"
-                               , tabName = "tab_filebuilder_outsideapp"
-                               , icon = icon("language")
-                               )
-                 , menuSubItem("Merge Files"
-                               , tabName = "tab_filebuilder_mergefiles"
-                               , icon = icon("code-merge")
-                               )
+                 # , menuSubItem("Outside the App"
+                 #               , tabName = "tab_filebuilder_outsideapp"
+                 #               , icon = icon("language")
+                 #               )
+                 # , menuSubItem("Merge Files"
+                 #               , tabName = "tab_filebuilder_mergefiles"
+                 #               , icon = icon("code-merge")
+                 #               )
                  )## menuItem ~ File Builder
       , menuItem(text = "Calculation"
                  , icon = icon("gears")
@@ -50,13 +50,13 @@ function(id) {
                                , tabName = "tab_calc_bcg"
                                , icon = icon("award"))
                  )## menuItem ~ BCG
-      , menuItem(text = "Map"
-                 , tabName = "tab_map"
-                 , icon = icon("map"))## menuItem ~ Map
-      , menuItem(text = "References"
-                 , tabName = "tab_resources"
-                 , icon = icon("book")
-                 )## menuItem ~ References ~ END
+      # , menuItem(text = "Map"
+      #            , tabName = "tab_map"
+      #            , icon = icon("map"))## menuItem ~ Map
+      # , menuItem(text = "References"
+      #            , tabName = "tab_resources"
+      #            , icon = icon("book")
+      #            )## menuItem ~ References ~ END
       , menuItem(text = "Troubleshooting"
                  , tabName = "tab_troubleshoot"
                  , icon = icon("question")
