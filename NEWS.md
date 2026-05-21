@@ -1,11 +1,16 @@
 LowerBoiseBCGCalc-NEWS
 ================
 <Ben.Block@tetratech.com>
-2026-05-21 14:10:24.173551
+2026-05-21 15:49:42.957851
 
 <!-- NEWS.md is generated from NEWS.Rmd. Please edit that file -->
 
-    #> Last Update: 2026-05-21 14:10:24.211009
+    #> Last Update: 2026-05-21 15:49:42.990452
+
+# LowerBoiseBCGCalc 0.0.0.9012 (2026-05-21)
+
+- fix: Update for revision to BioMonTools to fix metric calc
+  - pi_dom01_BCG_att456t
 
 # LowerBoiseBCGCalc 0.0.0.9011 (2026-05-21)
 

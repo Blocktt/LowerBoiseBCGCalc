@@ -21,6 +21,11 @@ knitr::opts_chunk$set(
 cat(paste0("Last Update: ",Sys.time()))
 ```
 
+# LowerBoiseBCGCalc 0.0.0.9012 (2026-05-21)
+
+* fix: Update for revision to BioMonTools to fix metric calc
+    + pi_dom01_BCG_att456t
+
 # LowerBoiseBCGCalc 0.0.0.9011 (2026-05-21)
 
 * docs: Add directions to README to run shiny app directly from GitHub
