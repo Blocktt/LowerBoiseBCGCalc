@@ -1,11 +1,17 @@
 LowerBoiseBCGCalc-NEWS
 ================
 <Ben.Block@tetratech.com>
-2026-05-20 17:07:19.988813
+2026-05-21 09:51:51.057296
 
 <!-- NEWS.md is generated from NEWS.Rmd. Please edit that file -->
 
-    #> Last Update: 2026-05-20 17:07:20.043326
+    #> Last Update: 2026-05-21 09:51:51.094123
+
+# LowerBoiseBCGCalc 0.0.0.9009 (2026-05-21)
+
+- refactor: Modify BCG_3metmemb_xtab columns
+- refactor: Modify order of columns in BCG Results file
+- fix: Modify QC check for missing INDEX_NAME in File Builder
 
 # LowerBoiseBCGCalc 0.0.0.9008 (2026-05-20)
 

@@ -387,6 +387,8 @@ shinyServer(function(input, output) {
         ## column, Index_Name
         if(!"INDEX_NAME" %in% toupper(names(df_input))) {
           col_indexname <- "INDEX_NAME"
+          # add here so doesn't fail later
+          df_input[, col_indexname] <- NA_character_
         } else {
           col_indexname <- names(df_input)[toupper(names(df_input)) == "INDEX_NAME"]
         } ## IF ~ INDEX_NAME
@@ -403,7 +405,9 @@ shinyServer(function(input, output) {
         # Check before set
         # if blank do nothing
         user_file_indexname_value <- unique(df_input[, col_indexname])[1]
-        if (toupper(my_comm) != toupper(user_file_indexname_value)) {
+        if(is.na(user_file_indexname_value)) {
+          # do nothing
+        } else if (toupper(my_comm) != toupper(user_file_indexname_value)) {
           # end process with pop up
           msg <- "'Community' doesn't match Index_Name in data!"
           shinyalert::shinyalert(title = "BCG Calculation"
@@ -1805,6 +1809,12 @@ shinyServer(function(input, output) {
 
       }## IF ~ check for matching index name and class
 
+      # Mofidy RESULTS column order, 20260521
+      df_results <- df_results |>
+        dplyr::relocate(BCG_Status,
+                        BCG_Status2,
+                        .before = Primary_BCG_Level)
+
 
       # Save, Flags Summary
       # fn_levflags <- paste0(fn_input_base, fn_abr_save, "6levflags.csv")
@@ -1836,6 +1846,7 @@ shinyServer(function(input, output) {
         # join tables
         dplyr::left_join(y = df_metmemb |>
                            dplyr::select(SAMPLEID,
+                                         INDEX_CLASS,
                                          METRIC_NAME,
                                          DESCRIPTION,
                                          METRIC_VALUE,
@@ -1843,7 +1854,8 @@ shinyServer(function(input, output) {
                                          MEMBERSHIP),
                          by = dplyr::join_by(SampleID == SAMPLEID)) |>
         # pivot
-        tidyr::pivot_wider(id_cols = c(SampleID,
+        tidyr::pivot_wider(id_cols = c(INDEX_CLASS,
+                                       SampleID,
                                        BCG_Status2,
                                        NumFlags,
                                        METRIC_NAME,
