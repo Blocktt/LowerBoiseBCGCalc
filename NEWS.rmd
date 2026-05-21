@@ -21,6 +21,10 @@ knitr::opts_chunk$set(
 cat(paste0("Last Update: ",Sys.time()))
 ```
 
+# LowerBoiseBCGCalc 0.0.0.9011 (2026-05-21)
+
+* docs: Add directions to README to run shiny app directly from GitHub
+   
 # LowerBoiseBCGCalc 0.0.0.9010 (2026-05-21)
 
 * refactor: Update UI

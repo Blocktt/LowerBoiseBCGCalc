@@ -1,11 +1,15 @@
 LowerBoiseBCGCalc-NEWS
 ================
 <Ben.Block@tetratech.com>
-2026-05-21 14:05:41.706821
+2026-05-21 14:10:24.173551
 
 <!-- NEWS.md is generated from NEWS.Rmd. Please edit that file -->
 
-    #> Last Update: 2026-05-21 14:05:41.739949
+    #> Last Update: 2026-05-21 14:10:24.211009
+
+# LowerBoiseBCGCalc 0.0.0.9011 (2026-05-21)
+
+- docs: Add directions to README to run shiny app directly from GitHub
 
 # LowerBoiseBCGCalc 0.0.0.9010 (2026-05-21)
 
