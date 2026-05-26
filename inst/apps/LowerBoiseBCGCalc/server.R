@@ -280,8 +280,70 @@ shinyServer(function(input, output) {
       # Remove existing files in "results"
       clean_results()
 
+      # move some stuff here for community named folder
+      # 20260526
+      # Import data
+      # data
+      inFile <- input$fn_input
+      fn_input_base <- tools::file_path_sans_ext(inFile$name)
+      message(paste0("Import, file name, base: ", fn_input_base))
+      df_input <- read.delim(inFile$datapath
+                             , header = TRUE
+                             , sep = input$sep
+                             , stringsAsFactors = FALSE)
+      # QC, FAIL if TRUE
+      if (is.null(df_input)) {
+        return(NULL)
+      }
+
+      sel_proj <- input$taxatrans_pick_official
+      ### Index Name (proj) ----
+      if (sel_proj == "") {
+        # end process with pop up
+        msg <- "'Calculation' is missing!"
+        shinyalert::shinyalert(title = "Taxa Translate"
+                               , text = msg
+                               , type = "error"
+                               , closeOnEsc = TRUE
+                               , closeOnClickOutside = TRUE)
+        validate(msg)
+        # } else if (sel_proj == "Lower Boise BCG (Bugs)") {
+        #   if(!"INDEX_NAME" %in% toupper(names(df_input))) {
+        #     col_indexname <- "INDEX_NAME"
+        #   } else {
+        #     col_indexname <- names(df_input)[toupper(names(df_input)) == "INDEX_NAME"]
+        #   } ## IF ~ INDEX_NAME
+        #   df_input[, col_indexname] <- indexname_lbr_bugs
+        # } else if (sel_proj == "Lower Boise BCG (Fish)") {
+        #   if(!"INDEX_NAME" %in% toupper(names(df_input))) {
+        #     col_indexname <- "INDEX_NAME"
+        #   } else {
+        #     col_indexname <- names(df_input)[toupper(names(df_input)) == "INDEX_NAME"]
+        #   } ## IF ~ INDEX_NAME
+        #   df_input[, col_indexname] <- indexname_lbr_fish
+      } else {
+
+        ## column, Index_Name
+        if(!"INDEX_NAME" %in% toupper(names(df_input))) {
+          col_indexname <- "INDEX_NAME"
+          # add here so doesn't fail later
+          df_input[, col_indexname] <- NA_character_
+        } else {
+          col_indexname <- names(df_input)[toupper(names(df_input)) == "INDEX_NAME"]
+        } ## IF ~ INDEX_NAME
+
+        if (sel_proj == "Lower Boise BCG (Bugs)") {
+          my_comm2 <- "Bugs"
+        } else if (sel_proj == "Lower Boise BCG (Fish)") {
+          my_comm2 <- "Fish"
+        } else {
+          my_comm2 <- "ERROR"
+        }## IF ~ my_comm
+
+
       # Copy user files to results sub-folder
-      copy_import_file(import_file = input$fn_input)
+      copy_import_file(import_file = input$fn_input,
+                       community = my_comm2)
 
       # result folder and files
       fn_abr <- abr_taxatrans
@@ -299,18 +361,18 @@ shinyServer(function(input, output) {
       shinyjs::disable("b_download_taxatrans")
 
       # Import data
-      # data
-      inFile <- input$fn_input
-      fn_input_base <- tools::file_path_sans_ext(inFile$name)
-      message(paste0("Import, file name, base: ", fn_input_base))
-      df_input <- read.delim(inFile$datapath
-                             , header = TRUE
-                             , sep = input$sep
-                             , stringsAsFactors = FALSE)
-      # QC, FAIL if TRUE
-      if (is.null(df_input)) {
-        return(NULL)
-      }
+      # # data
+      # inFile <- input$fn_input
+      # fn_input_base <- tools::file_path_sans_ext(inFile$name)
+      # message(paste0("Import, file name, base: ", fn_input_base))
+      # df_input <- read.delim(inFile$datapath
+      #                        , header = TRUE
+      #                        , sep = input$sep
+      #                        , stringsAsFactors = FALSE)
+      # # QC, FAIL if TRUE
+      # if (is.null(df_input)) {
+      #   return(NULL)
+      # }
 
       ## Calc, 02, Gather and Test Inputs  ----
       prog_detail <- "QC Inputs"
@@ -320,7 +382,7 @@ shinyServer(function(input, output) {
       Sys.sleep(prog_sleep)
 
       # Fun Param, Define
-      sel_proj <- input$taxatrans_pick_official
+      # sel_proj <- input$taxatrans_pick_official
       sel_user_taxaid <- input$taxatrans_user_col_taxaid
       #sel_col_drop <- unlist(input$taxatrans_user_col_drop)
       sel_user_ntaxa <- input$taxatrans_user_col_n_taxa
@@ -358,41 +420,41 @@ shinyServer(function(input, output) {
       dir_proj_results <- df_pick_taxoff[df_pick_taxoff$project == sel_proj
                                          , "dir_results"]
 
-      ### Index Name (proj) ----
-      if (sel_proj == "") {
-        # end process with pop up
-        msg <- "'Calculation' is missing!"
-        shinyalert::shinyalert(title = "Taxa Translate"
-                               , text = msg
-                               , type = "error"
-                               , closeOnEsc = TRUE
-                               , closeOnClickOutside = TRUE)
-        validate(msg)
-    # } else if (sel_proj == "Lower Boise BCG (Bugs)") {
-    #   if(!"INDEX_NAME" %in% toupper(names(df_input))) {
-    #     col_indexname <- "INDEX_NAME"
+    #   ### Index Name (proj) ----
+    #   if (sel_proj == "") {
+    #     # end process with pop up
+    #     msg <- "'Calculation' is missing!"
+    #     shinyalert::shinyalert(title = "Taxa Translate"
+    #                            , text = msg
+    #                            , type = "error"
+    #                            , closeOnEsc = TRUE
+    #                            , closeOnClickOutside = TRUE)
+    #     validate(msg)
+    # # } else if (sel_proj == "Lower Boise BCG (Bugs)") {
+    # #   if(!"INDEX_NAME" %in% toupper(names(df_input))) {
+    # #     col_indexname <- "INDEX_NAME"
+    # #   } else {
+    # #     col_indexname <- names(df_input)[toupper(names(df_input)) == "INDEX_NAME"]
+    # #   } ## IF ~ INDEX_NAME
+    # #   df_input[, col_indexname] <- indexname_lbr_bugs
+    # # } else if (sel_proj == "Lower Boise BCG (Fish)") {
+    # #   if(!"INDEX_NAME" %in% toupper(names(df_input))) {
+    # #     col_indexname <- "INDEX_NAME"
+    # #   } else {
+    # #     col_indexname <- names(df_input)[toupper(names(df_input)) == "INDEX_NAME"]
+    # #   } ## IF ~ INDEX_NAME
+    # #   df_input[, col_indexname] <- indexname_lbr_fish
     #   } else {
-    #     col_indexname <- names(df_input)[toupper(names(df_input)) == "INDEX_NAME"]
-    #   } ## IF ~ INDEX_NAME
-    #   df_input[, col_indexname] <- indexname_lbr_bugs
-    # } else if (sel_proj == "Lower Boise BCG (Fish)") {
-    #   if(!"INDEX_NAME" %in% toupper(names(df_input))) {
-    #     col_indexname <- "INDEX_NAME"
-    #   } else {
-    #     col_indexname <- names(df_input)[toupper(names(df_input)) == "INDEX_NAME"]
-    #   } ## IF ~ INDEX_NAME
-    #   df_input[, col_indexname] <- indexname_lbr_fish
-      } else {
-
-        ## column, Index_Name
-        if(!"INDEX_NAME" %in% toupper(names(df_input))) {
-          col_indexname <- "INDEX_NAME"
-          # add here so doesn't fail later
-          df_input[, col_indexname] <- NA_character_
-        } else {
-          col_indexname <- names(df_input)[toupper(names(df_input)) == "INDEX_NAME"]
-        } ## IF ~ INDEX_NAME
-
+    #
+    #     ## column, Index_Name
+    #     if(!"INDEX_NAME" %in% toupper(names(df_input))) {
+    #       col_indexname <- "INDEX_NAME"
+    #       # add here so doesn't fail later
+    #       df_input[, col_indexname] <- NA_character_
+    #     } else {
+    #       col_indexname <- names(df_input)[toupper(names(df_input)) == "INDEX_NAME"]
+    #     } ## IF ~ INDEX_NAME
+    #
         if (sel_proj == "Lower Boise BCG (Bugs)") {
           my_comm <- indexname_lbr_bugs
         } else if (sel_proj == "Lower Boise BCG (Fish)") {
@@ -482,7 +544,6 @@ shinyServer(function(input, output) {
         dir_proj_results <- paste("Bugs", dir_proj_results, sep = "_")
       } else if (sel_proj == "Lower Boise BCG (Bugs)") {
         dir_proj_results <- paste("Fish", dir_proj_results, sep = "_")
-
       } ## IF ~ sel_proj
 
       dn_files <- paste(abr_results, dir_proj_results, sep = "_")
@@ -748,37 +809,6 @@ shinyServer(function(input, output) {
         taxatrans_results$merge[, col_indexname] <- indexname_lbr_fish
       }## IF ~ sel_proj
 
-      ### xtab, Age Class ----
-      # 20260520
-      if (!is.null(fn_ageclass)) {
-        taxatrans_results$xtab_ac <- taxatrans_results$merge |>
-          # filter for RIS
-          dplyr::filter(RIS == TRUE) |>
-          # calculate sums by sample and taxon
-          dplyr::group_by(SampleID, COMMONNAME, AgeClass) |>
-          dplyr::summarize(N_Taxa_SUM = sum(N_Taxa, na.rm = TRUE),
-                           .groups = "drop") |>
-          # mod AgeClass
-          dplyr::mutate(ac_mod = paste0("AgeClass_",
-                                        sprintf("%02d", as.integer(AgeClass)))) |>
-          # pivot wide (sort ageclass cols)
-          tidyr::pivot_wider(id_cols = c(SampleID, COMMONNAME),
-                             names_from = ac_mod,
-                             values_from = N_Taxa_SUM,
-                             values_fill = 0,
-                             names_sort = TRUE) |>
-          # sort cols (sample and taxon)
-          dplyr::arrange(SampleID, COMMONNAME)
-
-        # Save
-        df_save <- data.frame(taxatrans_results$xtab_ac)
-        # fn_part <- paste0(fn_abr_save, "3nonmatch", ".csv")
-        fn_part <- "BCG_TaxaTranslator_AgeClass_xtab.csv"
-        write.csv(df_save
-                  , file.path(path_results_sub, fn_part)
-                  , row.names = FALSE)
-        rm(df_save, fn_part)
-      }## IF ~ age_class
 
       ## Calc, 04, Save Results ----
       prog_detail <- "Save Results"
@@ -1423,8 +1453,23 @@ shinyServer(function(input, output) {
       # Remove existing files in "results"
       clean_results()
 
+      # Move some checks here to get comm for input folder
+      # 20260526
+      my_comm <- input$si_community
+      if (my_comm == "") {
+        # end process with pop up
+        msg <- "'Community' blank!"
+        shinyalert::shinyalert(title = "BCG Calculation"
+                               , text = msg
+                               , type = "error"
+                               , closeOnEsc = TRUE
+                               , closeOnClickOutside = TRUE)
+        validate(msg)
+      }## ShinyAlert ~ community blank
+
       # Copy user files to results sub-folder
-      copy_import_file(import_file = input$fn_input)
+      copy_import_file(import_file = input$fn_input,
+                       community = my_comm)
 
       # result folder and files
       # 2023-12-14, add community
@@ -1475,18 +1520,18 @@ shinyServer(function(input, output) {
       names(df_input) <- toupper(names(df_input))
 
       ### QC, Index_Name----
-      my_comm <- input$si_community
-
-      if (my_comm == "") {
-        # end process with pop up
-        msg <- "'Community' blank!"
-        shinyalert::shinyalert(title = "BCG Calculation"
-                               , text = msg
-                               , type = "error"
-                               , closeOnEsc = TRUE
-                               , closeOnClickOutside = TRUE)
-        validate(msg)
-      }## ShinyAlert ~ community blank
+      # my_comm <- input$si_community
+      #
+      # if (my_comm == "") {
+      #   # end process with pop up
+      #   msg <- "'Community' blank!"
+      #   shinyalert::shinyalert(title = "BCG Calculation"
+      #                          , text = msg
+      #                          , type = "error"
+      #                          , closeOnEsc = TRUE
+      #                          , closeOnClickOutside = TRUE)
+      #   validate(msg)
+      # }## ShinyAlert ~ community blank
 
 
       ## column, Index_Name
@@ -1511,8 +1556,6 @@ shinyServer(function(input, output) {
       }## ShinyAlert ~ index_name vs. community
 
 
-
-
       ## value, Index_Name
       if (my_comm == "Bugs") {
         df_input[, col_indexname] <- indexname_lbr_bugs
@@ -1526,9 +1569,6 @@ shinyServer(function(input, output) {
       } else {
         BMT_comm <- "fish"
       }## IF ~ BMT_comm
-
-
-
 
 
       ## Calc, 2, Exclude Taxa ----
@@ -1837,9 +1877,91 @@ shinyServer(function(input, output) {
       pn_metflags <- file.path(dn_metflags, fn_metflags)
       write.csv(df_metflags, pn_metflags, row.names = FALSE)
 
+      ## 8.1 xtab, Age Class ----
+      # 20260520
+      # 20260526, move from TaxaTranslator and make changes
+      if (my_comm == "Fish") {
+        ### 8.1.1 AC xtab 1----
+        df_ac_xtab <- df_input |>
+          # filter for RIS
+          dplyr::filter(RIS == TRUE) |>
+          # calculate sums by sample and taxon
+          dplyr::group_by(SAMPLEID, COMMONNAME, AGECLASS, NUMAGECLASS_POSSIBLE) |>
+          dplyr::summarize(N_TAXA_SUM = sum(N_TAXA, na.rm = TRUE),
+                           .groups = "drop") |>
+          # mod AgeClass
+          dplyr::mutate(AC_MOD = paste0("AGECLASS_",
+                                        sprintf("%02d", as.integer(AGECLASS)))) |>
+          # pivot wide (sort ageclass cols)
+          tidyr::pivot_wider(id_cols = c(SAMPLEID, COMMONNAME, NUMAGECLASS_POSSIBLE),
+                             names_from = AC_MOD,
+                             values_from = N_TAXA_SUM,
+                             values_fill = 0,
+                             names_sort = TRUE) |>
+          # sort cols (sample and taxon)
+          dplyr::arrange(SAMPLEID, COMMONNAME) |>
+          # zero to NA when don't have that AgeClass
+          dplyr::mutate(AGECLASS_11 = case_when(NUMAGECLASS_POSSIBLE < 11 ~ NA,
+                                                TRUE ~ AGECLASS_11)) |>
+          dplyr::mutate(AGECLASS_10 = case_when(NUMAGECLASS_POSSIBLE < 10 ~ NA,
+                                                TRUE ~ AGECLASS_10)) |>
+          dplyr::mutate(AGECLASS_09 = case_when(NUMAGECLASS_POSSIBLE < 9 ~ NA,
+                                                TRUE ~ AGECLASS_09)) |>
+          dplyr::mutate(AGECLASS_08 = case_when(NUMAGECLASS_POSSIBLE < 8 ~ NA,
+                                                TRUE ~ AGECLASS_08)) |>
+          dplyr::mutate(AGECLASS_07 = case_when(NUMAGECLASS_POSSIBLE < 7 ~ NA,
+                                                TRUE ~ AGECLASS_07)) |>
+          dplyr::mutate(AGECLASS_06 = case_when(NUMAGECLASS_POSSIBLE < 6 ~ NA,
+                                                TRUE ~ AGECLASS_06)) |>
+          dplyr::mutate(AGECLASS_05 = case_when(NUMAGECLASS_POSSIBLE < 5 ~ NA,
+                                                TRUE ~ AGECLASS_05)) |>
+          dplyr::mutate(AGECLASS_04 = case_when(NUMAGECLASS_POSSIBLE < 4 ~ NA,
+                                                TRUE ~ AGECLASS_04)) |>
+          dplyr::mutate(AGECLASS_03 = case_when(NUMAGECLASS_POSSIBLE < 3 ~ NA,
+                                                TRUE ~ AGECLASS_03)) |>
+          dplyr::mutate(AGECLASS_02 = case_when(NUMAGECLASS_POSSIBLE < 2 ~ NA,
+                                                TRUE ~ AGECLASS_02)) |>
+          # drop num age class possible
+          dplyr::select(-NUMAGECLASS_POSSIBLE)
 
-      ## 8. Metmemb xtab -----
+        # Save
+        df_save <- data.frame(df_ac_xtab)
+        # fn_part <- paste0(fn_abr_save, "3nonmatch", ".csv")
+        fn_part <- "Fish_AgeClass_xtab.csv"
+        write.csv(df_save
+                  , file.path(path_results_sub, fn_part)
+                  , row.names = FALSE)
+        rm(df_save, fn_part)
+
+
+        ### 8.1.2 AC xtab 2----
+
+        df_ac_pclasses <- df_input |>
+          # filter for RIS
+          dplyr::filter(RIS == TRUE) |>
+          # calculate N of AgeClass by sample and taxon
+          dplyr::group_by(SAMPLEID,
+                          COMMONNAME,
+                          NUMAGECLASS_POSSIBLE) |>
+          dplyr::rename(NUM_POSSIBLE = NUMAGECLASS_POSSIBLE) |>
+          dplyr::summarize(NUM_AGECLASS = dplyr::n_distinct(AGECLASS)) |>
+          dplyr::mutate(PCT_AGECLASS = 100 * NUM_AGECLASS / NUM_POSSIBLE) |>
+          dplyr::relocate(NUM_POSSIBLE, .after = NUM_AGECLASS)
+
+        # Save
+        df_save <- data.frame(df_ac_pclasses)
+        # fn_part <- paste0(fn_abr_save, "3nonmatch", ".csv")
+        fn_part <- "Fish_AgeClass_pClasses.csv"
+        write.csv(df_save
+                  , file.path(path_results_sub, fn_part)
+                  , row.names = FALSE)
+        rm(df_save, fn_part)
+
+      }## IF ~ age_class
+
+      ## 8.2 Metmemb xtab -----
       # 2026-05-20
+      # 2026-05-26, add Metric_Sort
       df_metmemb_xtab <- df_results |>
         # cols to keep
         dplyr::select(SampleID, BCG_Status2, NumFlags) |>
@@ -1851,22 +1973,26 @@ shinyServer(function(input, output) {
                                          DESCRIPTION,
                                          METRIC_VALUE,
                                          LEVEL,
-                                         MEMBERSHIP),
+                                         MEMBERSHIP,
+                                         METRIC_SORT),
                          by = dplyr::join_by(SampleID == SAMPLEID)) |>
         # pivot
         tidyr::pivot_wider(id_cols = c(INDEX_CLASS,
                                        SampleID,
                                        BCG_Status2,
                                        NumFlags,
+                                       METRIC_SORT,
                                        METRIC_NAME,
                                        DESCRIPTION,
                                        METRIC_VALUE),
                            names_from = LEVEL,
                            values_from = MEMBERSHIP,
                            names_sort = TRUE,
-                           names_prefix = "L")
+                           names_prefix = "L") |>
+      dplyr::arrange(SampleID, METRIC_SORT)
+
       # save
-      fn_metmemb_xtab <- "BCG_3metmemb_xtab.csv"
+      fn_metmemb_xtab <- "BCG_3metmemb_xtab_METRICSORT.csv"
       dn_metmemb_xtab <- path_results_sub
       pn_metmemb_xtab <- file.path(dn_metmemb_xtab, fn_metmemb_xtab)
       write.csv(df_metmemb_xtab, pn_metmemb_xtab, row.names = FALSE)

@@ -1,11 +1,25 @@
 LowerBoiseBCGCalc-NEWS
 ================
 <Ben.Block@tetratech.com>
-2026-05-21 15:49:42.957851
+2026-05-26 16:49:48.811094
 
 <!-- NEWS.md is generated from NEWS.Rmd. Please edit that file -->
 
-    #> Last Update: 2026-05-21 15:49:42.990452
+    #> Last Update: 2026-05-26 16:49:48.910711
+
+# LowerBoiseBCGCalc 0.0.0.9013 (2026-05-26)
+
+- refactor: Update to pick up changes in BCGcalc Rules.xlsx for metric
+  sort
+- refactor: Move AgeClass xtab from taxa translator to results
+- refactor: Update \_user_input and results_BCG output folders to
+  include community (Bugs or Fish)
+- refactor: Modify BCG_3metmemb_xtab_MetricSort.csv to include new sort
+  values from Rules.xlsx in BCGcalc
+- refactor: Update import of Rules.xlsx to avoid sort column as logical
+- refactor: Add xtab Fish_AgeClass_pClasses.csv
+- refactor: Update Fish_AgeClass_xtab.csv from 0 to NA when age class
+  not possible for that taxon
 
 # LowerBoiseBCGCalc 0.0.0.9012 (2026-05-21)
 

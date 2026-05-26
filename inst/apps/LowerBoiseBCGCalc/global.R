@@ -1,7 +1,7 @@
 # Shiny Global File
 
 # Version ----
-pkg_version <- "0.0.0.9012"
+pkg_version <- "0.0.0.9013"
 
 # Packages----
 library(BCGcalc)
@@ -108,7 +108,7 @@ temp_bcg_models <- tempfile(fileext = ".xlsx")
 httr::GET(url_bcg_models, httr::write_disk(temp_bcg_models))
 
 df_bcg_models <- as.data.frame(readxl::read_excel(temp_bcg_models
-                                                  , guess_max = 10^3
+                                                  , guess_max = 10^5
                                                   , sheet = "Rules"))
 sel_bcg_models <- "BCG_LowerBoiseRiver"
 
