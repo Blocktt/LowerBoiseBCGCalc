@@ -38,25 +38,10 @@ function() {
                                           , "Download Results"))
         )## sidebarPanel ~ END
     , mainPanel(
-      tabsetPanel(type = "tabs"
-                  , tabPanel(title = "Introduction"
-                             , includeHTML(file.path("www"
-                                                     , "rmd_html"
-                                                     , "ShinyHTML_Calc_BCG_1Intro.html"))
-                  )
-                  , tabPanel(title = "Bug BCG"
-                             , includeHTML(file.path("www"
-                                                     , "rmd_html"
-                                                     , "ShinyHTML_Calc_BCG_2Bug.html"))
-                             , value = "tab_BCG_Bugs")
-                  , tabPanel(title = "Fish BCG"
-                             , includeHTML(file.path("www"
-                                                     , "rmd_html"
-                                                     , "ShinyHTML_Calc_BCG_3Fish.html"))
-                             , value = "tab_BCG_Fish"
-                  )
-      )## tabsetPanel ~ END
-
+      tabPanel(title = "BCG_Calculator"
+               ,includeHTML(file.path("www", "rmd_html"
+                                      , "ShinyHTML_Calc_BCG_1Intro.html"))
+      )## tabPanel ~ END
     )## mainPanel ~ END
   )##sidebarLayout ~ END
 }##FUNCTION ~ END

@@ -23,20 +23,20 @@ describes the calibration of the BCG models.
 
 Users can run any samples through this calculator and obtain a result.
 However, if samples were not collected and processed using these field
-and laboratory protocols[[JS2]](#_msocom_2)  [PDF], results should be
-interpreted with caution because they are outside the experience of the
-model.For those who prefer to use R instead of this online calculator,
-the functions are carried out by
-the [BCGcalc](https://github.com/leppott/BCGcalc) and [BioMonTools](https://github.com/leppott/BioMonTools)[[JS3]](#_msocom_3)  R
-packages, which are available on GitHub and were developed by Erik W.
-Leppo from Tetra Tech
-([Erik.Leppo\@tetratech.com](https://tetratech-wtr-wne.shinyapps.io/GreatPlainsBCGCalc/_w_568117555afa4006a3c5d3fc35046e39/#id_0)).
+and laboratory protocols <a href="https://github.com/Blocktt/LowerBoiseBCGCalc/blob/main/inst/apps/LowerBoiseBCGCalc/www/links/Methods_Bugs_Fish_20260525.pdf" target="_blank">PDF</a>, results should be interpreted with
+caution because they are outside the experience of the model. For those
+who prefer to use R instead of this online calculator, the functions are
+carried out by the <a href="https://github.com/leppott/BCGcalc" target="_blank">BCGcalc</a> and <a href="https://cran.r-project.org/web/packages/BioMonTools/index.html" target="_blank">BioMonTools</a> R packages, which
+are available on GitHub and were developed by Erik W. Leppo from Tetra
+Tech ([Erik.Leppo\@tetratech.com](#0)).
 
-\*If using the R code instead of the Shiny app, you won’t need internet
+*If using the R code instead of the Shiny app, you won’t need internet
 access if you have R installed on your computer and have downloaded all
 the necessary packages.
 
-**WHAT IS THE BIOLOGICAL CONDITION GRADIENT?**
+## What is the Biological Condition Gradient?
+
+![](images/BCG_ConceptualDiagram.jpg){width="608"}
 
 The Biological Condition Gradient (BCG) model is a conceptual model
 describing how ecological attributes change in response to increasing
@@ -51,33 +51,13 @@ and rationale are then used to calibrate a quantitative model. Model
 performance is judged based on how well the model matches the expert BCG
 level assignments.
 
-Additional resources:
+## Additional resources
 
-Synopsis: [The Biological Condition Gradient (BCG) - A Model for
-Interpreting Anthropogenic Stress on the Aquatic
-Environment](https://www.epa.gov/sites/default/files/2021-03/documents/bcg-flyer-2021.pdf)[[JS4]](#_msocom_4) 
+Synopsis: <a href="https://www.epa.gov/sites/default/files/2021-03/documents/bcg-flyer-2021.pdf" target="_blank">The Biological Condition Gradient (BCG) - A Model for Interpreting Anthropogenic Stress on the Aquatic Environment</a>
 
-[A Practitioner’s Guide to the Biological Condition Gradient: A
-Framework to Describe Incremental Change in Aquatic
-Ecosystems](https://www.epa.gov/sites/default/files/2016-02/documents/bcg-practioners-guide-report.pdf)
-(USEPA 2016)[[JS5]](#_msocom_5) 
-
- [[JS1]](#_msoanchor_1)will eventually add a link here to take readers
-to the report (in progress)
-
- [[JS2]](#_msoanchor_2)Link to Methods_Bugs_Fish_20260525 PDF
-
- [[JS3]](#_msoanchor_3)Should we update this to the CRAN link?
-
-[CRAN: Package
-BioMonTools](https://cran.r-project.org/web/packages/BioMonTools/index.html)
-
- [[JS4]](#_msoanchor_4)Link:
-<https://www.epa.gov/sites/default/files/2021-03/documents/bcg-flyer-2021.pdf>
-
- [[JS5]](#_msoanchor_5)Link:
-<https://www.epa.gov/sites/default/files/2016-02/documents/bcg-practioners-guide-report.pdf>
+<a href="https://www.epa.gov/sites/default/files/2016-02/documents/bcg-practioners-guide-report.pdf" target="_blank">A Practitioner’s Guide to the Biological Condition Gradient: A Framework to Describe Incremental Change in Aquatic
+Ecosystems</a>
 
 ------------------------------------------------------------------------
 
-*Last updated 2024-07-31*
+*Last updated 2025-05-27*

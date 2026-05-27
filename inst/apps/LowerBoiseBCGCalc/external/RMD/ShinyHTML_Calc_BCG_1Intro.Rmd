@@ -14,38 +14,88 @@ knitr::opts_chunk$set(echo = FALSE
                       , message = FALSE)
 ```
 
-# Introduction
+# BCG Calculator
 
-The Great Plains Biological Condition Gradient (BCG) is divided into six
-levels of biological condition along a generalized stressor-response
-curve, ranging from observable biological conditions found at no or low
-levels of stressors (level 1) to those found at high levels of stressors
-(level 6) (Figure 1)
-(<a href="https://www.epa.gov/sites/default/files/2016-02/documents/bcg-practioners-guide-report.pdf" target="blank">USEPA
-2016</a>).
+[**STEP 1: Go to the 'Import File' tab and upload the File Builder
+output file**]{.underline}
 
-Information on BCG input metrics and rules can be found on the bug and
-fish BCG subtabs. For more detailed information, see the Great Plains
-BCG report [in progress] on the References page.
+(Should be named BCG_TaxaTranslator_Results_wAttributes.csv)
 
-<a href="https://github.com/Blocktt/GreatPlainsBCGCalc/raw/main/inst/apps/GreatPlainsBCGCalc/www/links/RedundantTaxa_20240719.pdf" target="blank">**Redundant
-Taxa**</a>: There is a column called EXCLUDE that will be added to your
-input file automatically when you run the BCG Calculator. The EXCLUDE
-field marks redundant (non-distinct) taxa. Redundant taxa are excluded
-from richness metric calculations but are included in the composition
-(percent individuals) metrics. There is a ‘Generate Redundant Taxa
-Column’ box which is checked as the default setting since this is how
-metric calculations were handled during BCG model calibration. The box
-can be unchecked if you want to substitute your own designations.
+Make sure your data were collected and processed using these field and
+laboratory protocols
+<a href="https://github.com/Blocktt/LowerBoiseBCGCalc/blob/main/inst/apps/LowerBoiseBCGCalc/www/links/Methods_Bugs_Fish_20260525.pdf" target="_blank">[PDF]</a>.
 
-For guidance on how to interpret the results, download the **Metadata -
-BCG output** files on the Instructions page.
+[**Step 2: Return to the calculation tab and run the BCG
+calculator**]{.underline}
 
-![](images/About_Fig2_BCG.jpg){width="75%"}
+The R code will perform the following steps:
 
-Figure 1. Conceptual diagram of the Biological Condition Gradient (BCG)
-model.
+1.  Mark non-distinct taxa (excluded from richness metrics)
+
+2.  Calculate metric values for each sample
+
+3.  Calculate BCG metric membership values for each sample
+
+4.  Assign each sample membership in a BCG level
+
+Note: the default setting is for the R code to mark
+redundant/non-distinct taxa. If you want to use an alternate scheme,
+uncheck the box, include your designations (TRUE/FALSE) in the input
+file and name the column ‘EXCLUDE.’
+
+[**Step 3: Download and unzip the results**]{.underline}
+
+The files will be added to the appropriate subfolder (depending on the
+community.
+
+This brief memo
+<a href="https://github.com/Blocktt/LowerBoiseBCGCalc/blob/main/inst/apps/LowerBoiseBCGCalc/www/links/FuzzySetExplanation_20260526.pdf" target="_blank">[PDF]</a>
+provides background information on how the BCG model works.
+
+**List of BCG calculation outputs.**
+
+```{r table_outputs}
+# Packages
+library(readxl)
+library(knitr)
+library(kableExtra)
+
+# Data
+fn <- "OutputFileSubtabs.xlsx"
+path <- file.path("files", fn)
+df <- read_excel(path, sheet = "Calc_BCG")
+
+options(knitr.kable.NA = '')
+df %>%
+  kable(escape = FALSE, format = "html") %>%
+  kable_styling(full_width = F, position = "left")
+```
+
+**There are two additional outputs for the fish only.**
+
+```{r table_fishoutputs}
+# Packages
+library(readxl)
+library(knitr)
+library(kableExtra)
+
+# Data
+fn <- "OutputFileSubtabs.xlsx"
+path <- file.path("files", fn)
+df <- read_excel(path, sheet = "Calc_BCG_Fish")
+
+options(knitr.kable.NA = '')
+df %>%
+  kable(escape = FALSE, format = "html") %>%
+  kable_styling(full_width = F, position = "left")
+```
+
+METADATA
+<a href="https://github.com/Blocktt/LowerBoiseBCGCalc/blob/main/inst/apps/LowerBoiseBCGCalc/www/links/Metadata_Calculations_BCG_20260526.zip" target="_blank">[ZIP]</a>
+for each individual output file.
+
+**Having problems? See the Troubleshooting tab.**
 
 ------------------------------------------------------------------------
 
-*Last updated 2024-08-06*
+*Last updated 2026-05-27*

@@ -1,6 +1,6 @@
 ---
 title: "About_2StudyArea"
-date: "2026-01-07"
+date: "2026-05-27"
 output: html_fragment
 editor_options: 
   markdown: 
@@ -17,11 +17,15 @@ knitr::opts_chunk$set(echo = FALSE
 # Study area
 
 This R-based tool calculates Biological Condition Gradient (BCG) model
-outputs for macroinvertebrate and fish assemblages at sites on the Lower
-Boise River in Idaho.
+outputs for macroinvertebrate and fish assemblages at sites on the
+mainstem of the Lower Boise River in Idaho. Sites are matched with the
+appropriate class/stream segment using these geospatial (shapefile and
+kmz) files <a href="https://github.com/Blocktt/LowerBoiseBCGCalc/blob/main/inst/apps/LowerBoiseBCGCalc/www/links/BCG_ClassSegments2_20260304.zip" target="_blank">[ZIP]</a>.
 
-![](images/StudyArea_v1_20251222.jpg){width="683"}
+![](images/StudyArea_BCGclasses.jpg){width="630"}
+
+![](images/StudyArea_FocusMap.jpg){width="630"}
 
 ------------------------------------------------------------------------
 
-Last updated 2024-07-31
+*Last updated 2026-05-27*
