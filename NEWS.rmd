@@ -21,6 +21,13 @@ knitr::opts_chunk$set(
 cat(paste0("Last Update: ",Sys.time()))
 ```
 
+# LowerBoiseBCGCalc 0.0.0.9014 (2026-05-27)
+
+* fix: Update fish age class xtab to avoid crashing if don't have all classes
+    + Added max possible
+    + All values 0 when don't occur
+        - Complete not working to get NA
+
 # LowerBoiseBCGCalc 0.0.0.9013 (2026-05-26)
 
 * refactor: Update to pick up changes in BCGcalc Rules.xlsx for metric sort

@@ -1,11 +1,19 @@
 LowerBoiseBCGCalc-NEWS
 ================
 <Ben.Block@tetratech.com>
-2026-05-26 16:49:48.811094
+2026-05-27 09:41:29.27816
 
 <!-- NEWS.md is generated from NEWS.Rmd. Please edit that file -->
 
-    #> Last Update: 2026-05-26 16:49:48.910711
+    #> Last Update: 2026-05-27 09:41:29.341429
+
+# LowerBoiseBCGCalc 0.0.0.9014 (2026-05-27)
+
+- fix: Update fish age class xtab to avoid crashing if don’t have all
+  classes
+  - Added max possible
+  - All values 0 when don’t occur
+    - Complete not working to get NA
 
 # LowerBoiseBCGCalc 0.0.0.9013 (2026-05-26)
 

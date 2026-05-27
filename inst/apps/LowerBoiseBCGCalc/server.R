@@ -1881,48 +1881,88 @@ shinyServer(function(input, output) {
       # 20260520
       # 20260526, move from TaxaTranslator and make changes
       if (my_comm == "Fish") {
+
         ### 8.1.1 AC xtab 1----
         df_ac_xtab <- df_input |>
+          # testing
+          # dplyr::filter(COMMONNAME == "LONGNOSE DACE") |>
           # filter for RIS
           dplyr::filter(RIS == TRUE) |>
-          # calculate sums by sample and taxon
+          # ensure AC as integer
+          dplyr::mutate(AGECLASS = as.integer(AGECLASS)) |>
+          # group for calculation
           dplyr::group_by(SAMPLEID, COMMONNAME, AGECLASS, NUMAGECLASS_POSSIBLE) |>
+          # calc
           dplyr::summarize(N_TAXA_SUM = sum(N_TAXA, na.rm = TRUE),
                            .groups = "drop") |>
+
           # mod AgeClass
-          dplyr::mutate(AC_MOD = paste0("AGECLASS_",
-                                        sprintf("%02d", as.integer(AGECLASS)))) |>
-          # pivot wide (sort ageclass cols)
-          tidyr::pivot_wider(id_cols = c(SAMPLEID, COMMONNAME, NUMAGECLASS_POSSIBLE),
-                             names_from = AC_MOD,
-                             values_from = N_TAXA_SUM,
-                             values_fill = 0,
-                             names_sort = TRUE) |>
+          dplyr::mutate(
+            AC_MOD = paste0("AGECLASS_", sprintf("%02d", AGECLASS))) |>
+          # pivot wide
+          tidyr::pivot_wider(
+            id_cols = c(SAMPLEID, COMMONNAME, NUMAGECLASS_POSSIBLE),
+            names_from = AC_MOD,
+            values_from = N_TAXA_SUM,
+            values_fill = 0,
+            names_sort = TRUE
+          ) |>
+          # # unpivot to change 0 to NA
+          # tidyr::pivot_longer(
+          #   names_to = AC_MOD,
+          #   values_to = N_TAXA_SUM
+          # ) |>
+          # # mod values to NA
+          # dplyr::mutate(
+          #   N_TAXA_SUM = ifelse(AGECLASS < NUMAGECLASS_POSSIBLE,
+          #                       NA,
+          #                       N_TAXA_SUM)) |>
+          # # pivot back to wide
+          # tidyr::pivot_wider(
+          #   id_cols = c(SAMPLEID, COMMONNAME),
+          #   names_from = AC_MOD,
+          #   values_from = N_TAXA_SUM
+          # ) |>
           # sort cols (sample and taxon)
-          dplyr::arrange(SAMPLEID, COMMONNAME) |>
-          # zero to NA when don't have that AgeClass
-          dplyr::mutate(AGECLASS_11 = case_when(NUMAGECLASS_POSSIBLE < 11 ~ NA,
-                                                TRUE ~ AGECLASS_11)) |>
-          dplyr::mutate(AGECLASS_10 = case_when(NUMAGECLASS_POSSIBLE < 10 ~ NA,
-                                                TRUE ~ AGECLASS_10)) |>
-          dplyr::mutate(AGECLASS_09 = case_when(NUMAGECLASS_POSSIBLE < 9 ~ NA,
-                                                TRUE ~ AGECLASS_09)) |>
-          dplyr::mutate(AGECLASS_08 = case_when(NUMAGECLASS_POSSIBLE < 8 ~ NA,
-                                                TRUE ~ AGECLASS_08)) |>
-          dplyr::mutate(AGECLASS_07 = case_when(NUMAGECLASS_POSSIBLE < 7 ~ NA,
-                                                TRUE ~ AGECLASS_07)) |>
-          dplyr::mutate(AGECLASS_06 = case_when(NUMAGECLASS_POSSIBLE < 6 ~ NA,
-                                                TRUE ~ AGECLASS_06)) |>
-          dplyr::mutate(AGECLASS_05 = case_when(NUMAGECLASS_POSSIBLE < 5 ~ NA,
-                                                TRUE ~ AGECLASS_05)) |>
-          dplyr::mutate(AGECLASS_04 = case_when(NUMAGECLASS_POSSIBLE < 4 ~ NA,
-                                                TRUE ~ AGECLASS_04)) |>
-          dplyr::mutate(AGECLASS_03 = case_when(NUMAGECLASS_POSSIBLE < 3 ~ NA,
-                                                TRUE ~ AGECLASS_03)) |>
-          dplyr::mutate(AGECLASS_02 = case_when(NUMAGECLASS_POSSIBLE < 2 ~ NA,
-                                                TRUE ~ AGECLASS_02)) |>
-          # drop num age class possible
-          dplyr::select(-NUMAGECLASS_POSSIBLE)
+          dplyr::arrange(SAMPLEID, COMMONNAME)
+
+
+
+          #
+          # # mod AgeClass
+          # dplyr::mutate(AC_MOD = paste0("AGECLASS_",
+          #                               sprintf("%02d", as.integer(AGECLASS)))) |>
+          # # pivot wide (sort ageclass cols)
+          # tidyr::pivot_wider(id_cols = c(SAMPLEID, COMMONNAME, NUMAGECLASS_POSSIBLE),
+          #                    names_from = AC_MOD,
+          #                    values_from = N_TAXA_SUM,
+          #                    values_fill = 0,
+          #                    names_sort = TRUE) |>
+          # # sort cols (sample and taxon)
+          # dplyr::arrange(SAMPLEID, COMMONNAME) |>
+          # # zero to NA when don't have that AgeClass
+          # dplyr::mutate(AGECLASS_11 = case_when(NUMAGECLASS_POSSIBLE < 11 ~ NA,
+          #                                       TRUE ~ AGECLASS_11)) |>
+          # dplyr::mutate(AGECLASS_10 = case_when(NUMAGECLASS_POSSIBLE < 10 ~ NA,
+          #                                       TRUE ~ AGECLASS_10)) |>
+          # dplyr::mutate(AGECLASS_09 = case_when(NUMAGECLASS_POSSIBLE < 9 ~ NA,
+          #                                       TRUE ~ AGECLASS_09)) |>
+          # dplyr::mutate(AGECLASS_08 = case_when(NUMAGECLASS_POSSIBLE < 8 ~ NA,
+          #                                       TRUE ~ AGECLASS_08)) |>
+          # dplyr::mutate(AGECLASS_07 = case_when(NUMAGECLASS_POSSIBLE < 7 ~ NA,
+          #                                       TRUE ~ AGECLASS_07)) |>
+          # dplyr::mutate(AGECLASS_06 = case_when(NUMAGECLASS_POSSIBLE < 6 ~ NA,
+          #                                       TRUE ~ AGECLASS_06)) |>
+          # dplyr::mutate(AGECLASS_05 = case_when(NUMAGECLASS_POSSIBLE < 5 ~ NA,
+          #                                       TRUE ~ AGECLASS_05)) |>
+          # dplyr::mutate(AGECLASS_04 = case_when(NUMAGECLASS_POSSIBLE < 4 ~ NA,
+          #                                       TRUE ~ AGECLASS_04)) |>
+          # dplyr::mutate(AGECLASS_03 = case_when(NUMAGECLASS_POSSIBLE < 3 ~ NA,
+          #                                       TRUE ~ AGECLASS_03)) |>
+          # dplyr::mutate(AGECLASS_02 = case_when(NUMAGECLASS_POSSIBLE < 2 ~ NA,
+          #                                       TRUE ~ AGECLASS_02)) |>
+          # # drop num age class possible
+          # dplyr::select(-NUMAGECLASS_POSSIBLE)
 
         # Save
         df_save <- data.frame(df_ac_xtab)
