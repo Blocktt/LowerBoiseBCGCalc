@@ -90,7 +90,7 @@ df %>%
   kable_styling(full_width = F, position = "left")
 ```
 
-METADATA
+**Download METADATA**
 <a href="https://github.com/Blocktt/LowerBoiseBCGCalc/blob/main/inst/apps/LowerBoiseBCGCalc/www/links/Metadata_Calculations_BCG_20260526.zip" target="_blank">[ZIP]</a>
 for each individual output file.
 

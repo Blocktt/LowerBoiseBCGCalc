@@ -1,6 +1,6 @@
 ---
 title: "About_1About"
-date: "2026-05-27"
+date: "2026-05-28"
 output: html_fragment
 editor_options: 
   markdown: 
@@ -14,25 +14,41 @@ knitr::opts_chunk$set(echo = FALSE
                       , message = FALSE)
 ```
 
-# Quick Tutorial
+# About
 
 This R-based tool calculates Biological Condition Gradient (BCG) scores
 for macroinvertebrate and fish assemblages at sites on the mainstem of
 the Lower Boise River in Idaho. This report (Report Placeholder)
 describes the calibration of the BCG models.
 
-Users can run any samples through this calculator and obtain a result.
-However, if samples were not collected and processed using these field
-and laboratory protocols <a href="https://github.com/Blocktt/LowerBoiseBCGCalc/blob/main/inst/apps/LowerBoiseBCGCalc/www/links/Methods_Bugs_Fish_20260525.pdf" target="_blank">PDF</a>, results should be interpreted with
-caution because they are outside the experience of the model. For those
-who prefer to use R instead of this online calculator, the functions are
-carried out by the <a href="https://github.com/leppott/BCGcalc" target="_blank">BCGcalc</a> and <a href="https://cran.r-project.org/web/packages/BioMonTools/index.html" target="_blank">BioMonTools</a> R packages, which
-are available on GitHub and were developed by Erik W. Leppo from Tetra
-Tech ([Erik.Leppo\@tetratech.com](#0)).
+# <a href="https://github.com/Blocktt/LowerBoiseBCGCalc/blob/main/inst/apps/LowerBoiseBCGCalc/www/links/QuickTutorial_LBR_20260525.pdf" target="_blank">Quick Tutorial</a>
 
-*If using the R code instead of the Shiny app, you won’t need internet
+**Test Files**:
+
+-   Fish <a href="https://github.com/Blocktt/LowerBoiseBCGCalc/blob/main/inst/apps/LowerBoiseBCGCalc/www/links/LBR_Test_Fish_20260525.csv" target="_blank">[CSV]</a>
+
+-   Bugs <a href="https://github.com/Blocktt/LowerBoiseBCGCalc/blob/main/inst/apps/LowerBoiseBCGCalc/www/links/LBR_Test_Bugs_20260525.csv" target="_blank">[CSV]</a>
+
+For those who prefer to use R instead of this online calculator, the
+functions are carried out by the
+<a href="https://github.com/leppott/BCGcalc" target="_blank">BCGcalc</a>
+and
+<a href="https://cran.r-project.org/web/packages/BioMonTools/index.html" target="_blank">BioMonTools</a>
+R packages, which are available on GitHub and were developed by Erik W.
+Leppo from Tetra Tech ([Erik.Leppo\@tetratech.com](#0)).
+
+\*If using the R code instead of the Shiny app, you won’t need internet
 access if you have R installed on your computer and have downloaded all
 the necessary packages.
+
+**Methods are important!**
+
+Users can run any samples through this calculator and obtain a result.
+However, if samples were not collected and processed using these field
+and laboratory protocols
+<a href="https://github.com/Blocktt/LowerBoiseBCGCalc/blob/main/inst/apps/LowerBoiseBCGCalc/www/links/Methods_Bugs_Fish_20260525.pdf" target="_blank">PDF</a>,
+results should be interpreted with caution because they are outside the
+experience of the model.
 
 ## What is the Biological Condition Gradient?
 
@@ -53,11 +69,15 @@ level assignments.
 
 ## Additional resources
 
-Synopsis: <a href="https://www.epa.gov/sites/default/files/2021-03/documents/bcg-flyer-2021.pdf" target="_blank">The Biological Condition Gradient (BCG) - A Model for Interpreting Anthropogenic Stress on the Aquatic Environment</a>
+Synopsis:
+<a href="https://www.epa.gov/sites/default/files/2021-03/documents/bcg-flyer-2021.pdf" target="_blank">The
+Biological Condition Gradient (BCG) - A Model for Interpreting
+Anthropogenic Stress on the Aquatic Environment</a>
 
-<a href="https://www.epa.gov/sites/default/files/2016-02/documents/bcg-practioners-guide-report.pdf" target="_blank">A Practitioner’s Guide to the Biological Condition Gradient: A Framework to Describe Incremental Change in Aquatic
-Ecosystems</a>
+<a href="https://www.epa.gov/sites/default/files/2016-02/documents/bcg-practioners-guide-report.pdf" target="_blank">A
+Practitioner’s Guide to the Biological Condition Gradient: A Framework
+to Describe Incremental Change in Aquatic Ecosystems</a>
 
 ------------------------------------------------------------------------
 
-*Last updated 2025-05-27*
+*Last updated 2025-05-28*

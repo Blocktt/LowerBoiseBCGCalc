@@ -23,6 +23,7 @@ for multiple samples, sites and Index Classes.
 
 **REQUIRED fields. Column heading names in the input file are flexible
 (use drop-down menus to match).**
+
 ```{r table_req}
 # Packages
 library(readxl)
@@ -43,6 +44,7 @@ df %>%
 **OPTIONAL fields can be included as well and will be carried through
 into the output file. If you include DELT anomalies (fish) and density
 (bugs) the column names must match what is shown below.**
+
 ```{r table_optional}
 # Packages
 library(readxl)
@@ -75,7 +77,8 @@ df %>%
 -   Main_NotusParma
 
 Sites can be matched with the appropriate class/stream segment using
-these geospatial (shapefile and kmz) files <a href="https://github.com/Blocktt/LowerBoiseBCGCalc/blob/main/inst/apps/LowerBoiseBCGCalc/www/links/BCG_ClassSegments2_20260304.zip" target="_blank">[ZIP]</a>.
+these geospatial (shapefile and kmz) files
+<a href="https://github.com/Blocktt/LowerBoiseBCGCalc/blob/main/inst/apps/LowerBoiseBCGCalc/www/links/BCG_ClassSegments2_20260304.zip" target="_blank">[ZIP]</a>.
 
 [**Step 2: Go to the 'Import File' tab and upload the input
 file**]{.underline}
@@ -93,7 +96,9 @@ functions:
 -   Adds in new columns with taxa attributes and hierarchy (e.g., Order,
     Family) that are needed for the metric calculations.
 
-The Lower Boise River fish and macroinvertebrate <a href="https://github.com/leppott/BioMonTools_SupportFiles/tree/main/data/taxa_official/LowerBoise" target="_blank">Taxa Translator and Taxa Attribute tables</a> are available online.
+The Lower Boise River fish and macroinvertebrate
+<a href="https://github.com/leppott/BioMonTools_SupportFiles/tree/main/data/taxa_official/LowerBoise" target="_blank">Taxa
+Translator and Taxa Attribute tables</a> are available online.
 
 When the File Builder has finished running, **a prompt box will
 appear**. It will notify you if your File Builder run was successful or
@@ -120,6 +125,7 @@ Tech will update the Taxa Translator table as soon as resources permit.
 [**Step 4: Download and unzip the results**]{.underline}
 
 **A ‘results’ folder will appear, with the following subfolders:**
+
 ```{r table_FB_folders}
 # Packages
 library(readxl)
@@ -139,6 +145,7 @@ df %>%
 
 **In the results subfolders, there will be four File Builder output
 files, described below.**
+
 ```{r table_FB_files}
 # Packages
 library(readxl)
@@ -156,7 +163,7 @@ df %>%
   kable_styling(full_width = F, position = "left")
 ```
 
-Download METADATA
+**Download METADATA**
 <a href="https://github.com/Blocktt/LowerBoiseBCGCalc/blob/main/inst/apps/LowerBoiseBCGCalc/www/links/Metadata_FileBuilder_20260526.zip" target="_blank">[ZIP]</a>
 for all the File Builder output files.
 
