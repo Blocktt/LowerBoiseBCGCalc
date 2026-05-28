@@ -1,6 +1,6 @@
 {
     "dialog-state": {
-        "query": "ShinyHTML_RedundantTaxa",
+        "query": "df_pick_taxoff",
         "path": "",
         "regex": false,
         "caseSensitive": false,
@@ -9,7 +9,7 @@
         "useGitGrep": false,
         "excludeGitIgnore": true,
         "excludeFilePatterns": [],
-        "resultsCount": 1,
+        "resultsCount": 24,
         "errorCount": 0,
         "replaceErrors": "",
         "projectRelative": true
