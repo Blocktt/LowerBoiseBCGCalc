@@ -27,11 +27,6 @@ function() {
             , uiOutput("UI_taxatrans_user_col_indexclass")
 
             , h6("Additional Fields")
-            , p("There is one additional required field (BugGear) for Iowa bug samples.
-                Optional fields (e.g., SiteID, collection date) can be selected as well.
-                IMPORTANT! Do not include Life Stage or other fields that might
-                cause a taxon to occur in more than one row for a given sample
-                (which could lead to double-counting of that taxon in the richness metrics).")
             , uiOutput("UI_taxatrans_user_col_groupby")
 
             , h4("D. Run Operation")

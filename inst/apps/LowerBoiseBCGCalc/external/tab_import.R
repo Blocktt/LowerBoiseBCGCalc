@@ -31,6 +31,13 @@ function() {
           , p(paste0("File uploads are limited to a maximum of "
                      , mb_limit
                      , " MB in size."))
+        , h4("Test Files")
+        , p("Below are test files that you can download and run through the Shiny app.")
+        , tags$ul(tags$li(HTML(paste0("Fish "
+            , '<a href="https://github.com/Blocktt/LowerBoiseBCGCalc/blob/main/inst/apps/LowerBoiseBCGCalc/www/links/LBR_Test_Fish_20260525.csv" target="_blank">[CSV]</a>')))
+                  , tags$li(HTML("Bugs "
+            , paste0('<a href="https://github.com/Blocktt/LowerBoiseBCGCalc/blob/main/inst/apps/LowerBoiseBCGCalc/www/links/LBR_Test_Bugs_20260525.csv" target="_blank">[CSV]</a>'))))
+
 
         )##sidebarPanel~END
       # Main Panel ####
