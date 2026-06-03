@@ -1,11 +1,51 @@
 LowerBoiseBCGCalc-NEWS
 ================
 <Ben.Block@tetratech.com>
-2026-05-27 09:41:29.27816
+2026-06-03 09:47:56.55037
 
 <!-- NEWS.md is generated from NEWS.Rmd. Please edit that file -->
 
-    #> Last Update: 2026-05-27 09:41:29.341429
+    #> Last Update: 2026-06-03 09:47:56.633409
+
+# LowerBoiseBCGCalc 0.0.0.9022 (2026-06-03)
+
+- docs: Update missing entries in NEWS
+- docs: Update version number in DESCRIPTION
+- refactor: Update version number in global
+- fix: Add check for non-standard Index_Class in File Builder
+  - Change right before save
+- refactor: Added placeholder in File Builder for checking for duplicate
+  user selected column names
+
+# LowerBoiseBCGCalc 0.0.0.9021 (2026-05-28)
+
+- UI updates
+
+# LowerBoiseBCGCalc 0.0.0.9020 (2026-05-28)
+
+- Minor update that fixes output folder. Still need to deal with
+  duplicate from calc section.
+
+# LowerBoiseBCGCalc 0.0.0.9019 (2026-05-28)
+
+- Removed unnecessary files from past versions
+
+# LowerBoiseBCGCalc 0.0.0.9018 (2026-05-28)
+
+- Updated UI
+
+# LowerBoiseBCGCalc 0.0.0.9017 (2026-05-27)
+
+- UI updates to About tabs and Calculate tab.
+
+# LowerBoiseBCGCalc 0.0.0.9016 (2026-05-27)
+
+- Additional files in www
+
+# LowerBoiseBCGCalc 0.0.0.9015 (2026-05-27)
+
+- Preliminary updates to About UI RMD. Added images and files so links
+  are live.
 
 # LowerBoiseBCGCalc 0.0.0.9014 (2026-05-27)
 

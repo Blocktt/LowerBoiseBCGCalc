@@ -567,6 +567,10 @@ shinyServer(function(input, output) {
         validate(msg)
       }## IF ~ sel_user_indexclass
 
+      # Same Col Selected Multiple Times
+      # not enough project time to create check
+      # look for dups and then create shiny alert
+
       ## Calc, 03, Import Official Data (and Metadata)  ----
       prog_detail <- "Import Data, Official and Metadata"
       message(paste0("\n", prog_detail))
@@ -809,6 +813,12 @@ shinyServer(function(input, output) {
         taxatrans_results$merge[, col_indexname] <- indexname_lbr_fish
       }## IF ~ sel_proj
 
+      ### Index_Class (output) ----
+      # convert user IndexClass to standard Index_Class
+      if (sel_user_indexclass != "Index_Class") {
+        taxatrans_results$merge <- taxatrans_results$merge |>
+          dplyr::rename(Index_Class = dplyr::all_of(sel_user_indexclass))
+      }## IF ~ index class
 
       ## Calc, 04, Save Results ----
       prog_detail <- "Save Results"
