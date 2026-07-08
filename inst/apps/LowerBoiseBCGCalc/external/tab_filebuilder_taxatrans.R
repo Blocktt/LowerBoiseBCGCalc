@@ -19,6 +19,10 @@ function() {
             , h6("Required Fields")
             , p("If the default values are present they will be auto-populated.")
             # SampleID (really for group_by)
+            , uiOutput("UI_taxatrans_user_col_locid")
+            , uiOutput("UI_taxatrans_user_col_actDate")
+            , uiOutput("UI_taxatrans_user_col_actYear")
+
             , uiOutput("UI_taxatrans_user_col_sampid")
             , uiOutput("UI_taxatrans_user_col_taxaid")
             # N_Taxa (really for group_by)

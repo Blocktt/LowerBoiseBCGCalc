@@ -255,6 +255,34 @@ shinyServer(function(input, output) {
                 , multiple = FALSE)
     })## UI_colnames
 
+  output$UI_taxatrans_user_col_actDate <- renderUI({
+    req(input$taxatrans_pick_official == "Lower Boise BCG (Bugs)")
+    req(df_import())
+    selectInput(inputId = "taxatrans_user_col_actDate"
+                , label   = "Column, Activity Date (MM/DD/YYYY)"
+                , choices = c("", names(df_import()))
+                , selected = "activityDate"
+                , multiple = FALSE)
+  })## UI_colnames
+
+  output$UI_taxatrans_user_col_locid <- renderUI({
+    str_col <- "Column, Location Identifier (e.g., locationId)"
+    selectInput("taxatrans_user_col_locid"
+                , label = str_col
+                , choices = c("", names(df_import()))
+                , selected = "locationId"
+                , multiple = FALSE)
+  })## UI_colnames
+
+  output$UI_taxatrans_user_col_actYear <- renderUI({
+    str_col <- "Column, Activity Year (e.g., 2026)"
+    selectInput("taxatrans_user_col_actYear"
+                , label = str_col
+                , choices = c("", names(df_import()))
+                , selected = "activityYear"
+                , multiple = FALSE)
+  })## UI_colnames
+
   ## b_Calc_TaxaTrans ----
   observeEvent(input$b_calc_taxatrans, {
     shiny::withProgress({
