@@ -3,6 +3,16 @@
 
 <div id="prepare-an-input-file-with-file-builder" class="section level1">
 <h1>Prepare an input file with <em>File Builder</em></h1>
+<p>IMPORTANT NOTE: if you are using the BCG results, your data should be
+collected and processed using these field and laboratory protocols
+[<a href="https://github.com/Blocktt/LowerBoiseBCGCalc/blob/main/inst/apps/LowerBoiseBCGCalc/www/links/Methods_Bugs_Fish_20260525.pdf" target="_blank">PDF</a>].</p>
+<ul>
+<li><p>Macroinvertebrates: USGS National Water‑Quality Assessment
+(NAWQA) Richest Targeted Habitat (RTH) method</p></li>
+<li><p>Fish: composite of two electrofishing passes - one through
+deep-water areas with a boat or tow barge; the second through shallower
+riffle areas with a backpack electrofisher</p></li>
+</ul>
 <p><u><strong>Step 1: Create the input file</strong></u></p>
 <p>The input file must be a comma-separated file (CSV). It can include
 data for multiple samples, sites and Index Classes.</p>
@@ -34,6 +44,66 @@ Description
 <tbody>
 <tr>
 <td style="text-align:left;">
+locationId
+</td>
+<td style="text-align:left;">
+x
+</td>
+<td style="text-align:left;">
+x
+</td>
+<td style="text-align:left;">
+text or numeric
+</td>
+<td style="text-align:left;">
+Flexible
+</td>
+<td style="text-align:left;">
+Site identifier
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+activityYear
+</td>
+<td style="text-align:left;">
+x
+</td>
+<td style="text-align:left;">
+x
+</td>
+<td style="text-align:left;">
+numeric
+</td>
+<td style="text-align:left;">
+Positive integer
+</td>
+<td style="text-align:left;">
+Year of the sampling event
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+activityDate
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+x
+</td>
+<td style="text-align:left;">
+date
+</td>
+<td style="text-align:left;">
+Date, preferably in this format: MM/DD/YYYY
+</td>
+<td style="text-align:left;">
+Example: 10/26/1996. Not required for fish because the two passes are
+sometimes done on different dates.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 SampleID
 </td>
 <td style="text-align:left;">
@@ -46,7 +116,7 @@ x
 text
 </td>
 <td style="text-align:left;">
-flexible
+Flexible
 </td>
 <td style="text-align:left;">
 Unique sample identifier
@@ -66,7 +136,7 @@ x
 text
 </td>
 <td style="text-align:left;">
-flexible
+Flexible
 </td>
 <td style="text-align:left;">
 Taxon name
@@ -86,7 +156,7 @@ x
 numeric
 </td>
 <td style="text-align:left;">
-non-negative real numbers; should not be blank
+Non-negative real numbers; should not be blank
 </td>
 <td style="text-align:left;">
 Number of individuals
@@ -106,7 +176,7 @@ x
 text
 </td>
 <td style="text-align:left;">
-see list below (must match exactly)
+See list below (must match exactly)
 </td>
 <td style="text-align:left;">
 Tells R which rules and metrics to apply, based on class
@@ -125,7 +195,7 @@ x
 numeric
 </td>
 <td style="text-align:left;">
-non-negative real numbers; blanks are OK
+Non-negative real numbers; blanks are OK
 </td>
 <td style="text-align:left;">
 Length, units = mm
@@ -369,5 +439,5 @@ Attribute tables were used
 <a href="https://github.com/Blocktt/LowerBoiseBCGCalc/blob/main/inst/apps/LowerBoiseBCGCalc/www/links/Metadata_FileBuilder_20260526.zip" target="_blank">[ZIP]</a>
 for all the File Builder output files.</p>
 <hr />
-<p><em>Last updated: 2026-05-27</em></p>
+<p><em>Last updated: 2026-07-07</em></p>
 </div>

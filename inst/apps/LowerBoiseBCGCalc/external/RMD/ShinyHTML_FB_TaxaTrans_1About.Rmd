@@ -16,6 +16,17 @@ knitr::opts_chunk$set(echo = FALSE
 
 # Prepare an input file with *File Builder*
 
+IMPORTANT NOTE: if you are using the BCG results, your data should be
+collected and processed using these field and laboratory protocols
+[<a href="https://github.com/Blocktt/LowerBoiseBCGCalc/blob/main/inst/apps/LowerBoiseBCGCalc/www/links/Methods_Bugs_Fish_20260525.pdf" target="_blank">PDF</a>].
+
+-   Macroinvertebrates: USGS National Water‑Quality Assessment (NAWQA)
+    Richest Targeted Habitat (RTH) method
+
+-   Fish: composite of two electrofishing passes - one through
+    deep-water areas with a boat or tow barge; the second through
+    shallower riffle areas with a backpack electrofisher
+
 [**Step 1: Create the input file**]{.underline}
 
 The input file must be a comma-separated file (CSV). It can include data
@@ -169,4 +180,4 @@ for all the File Builder output files.
 
 ------------------------------------------------------------------------
 
-*Last updated: 2026-05-27*
+*Last updated: 2026-07-07*

@@ -16,14 +16,21 @@ knitr::opts_chunk$set(echo = FALSE
 
 # BCG Calculator
 
+IMPORTANT NOTE: if you are using the BCG results, your data should be
+collected and processed using these field and laboratory protocols
+[<a href="https://github.com/Blocktt/LowerBoiseBCGCalc/blob/main/inst/apps/LowerBoiseBCGCalc/www/links/Methods_Bugs_Fish_20260525.pdf" target="_blank">PDF</a>].
+
+-   Macroinvertebrates: USGS National Water‑Quality Assessment (NAWQA)
+    Richest Targeted Habitat (RTH) method
+
+-   Fish: composite of two electrofishing passes - one through
+    deep-water areas with a boat or tow barge; the second through
+    shallower riffle areas with a backpack electrofisher
+
 [**STEP 1: Go to the 'Import File' tab and upload the File Builder
 output file**]{.underline}
 
 (Should be named BCG_TaxaTranslator_Results_wAttributes.csv)
-
-Make sure your data were collected and processed using these field and
-laboratory protocols
-<a href="https://github.com/Blocktt/LowerBoiseBCGCalc/blob/main/inst/apps/LowerBoiseBCGCalc/www/links/Methods_Bugs_Fish_20260525.pdf" target="_blank">[PDF]</a>.
 
 [**Step 2: Return to the calculation tab and run the BCG
 calculator**]{.underline}
@@ -91,11 +98,11 @@ df %>%
 ```
 
 **Download METADATA**
-<a href="https://github.com/Blocktt/LowerBoiseBCGCalc/blob/main/inst/apps/LowerBoiseBCGCalc/www/links/Metadata_Calculations_BCG_20260526.zip" target="_blank">[ZIP]</a>
+<a href="https://github.com/Blocktt/LowerBoiseBCGCalc/blob/main/inst/apps/LowerBoiseBCGCalc/www/links/Metadata_Calculations_BCG_20260707.zip" target="_blank">[ZIP]</a>
 for each individual output file.
 
 **Having problems? See the Troubleshooting tab.**
 
 ------------------------------------------------------------------------
 
-*Last updated 2026-05-27*
+*Last updated 2026-07-07*

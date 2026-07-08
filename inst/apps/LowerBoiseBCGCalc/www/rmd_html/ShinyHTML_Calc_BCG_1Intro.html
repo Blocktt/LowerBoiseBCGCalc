@@ -3,12 +3,19 @@
 
 <div id="bcg-calculator" class="section level1">
 <h1>BCG Calculator</h1>
+<p>IMPORTANT NOTE: if you are using the BCG results, your data should be
+collected and processed using these field and laboratory protocols
+[<a href="https://github.com/Blocktt/LowerBoiseBCGCalc/blob/main/inst/apps/LowerBoiseBCGCalc/www/links/Methods_Bugs_Fish_20260525.pdf" target="_blank">PDF</a>].</p>
+<ul>
+<li><p>Macroinvertebrates: USGS National Water‑Quality Assessment
+(NAWQA) Richest Targeted Habitat (RTH) method</p></li>
+<li><p>Fish: composite of two electrofishing passes - one through
+deep-water areas with a boat or tow barge; the second through shallower
+riffle areas with a backpack electrofisher</p></li>
+</ul>
 <p><u><strong>STEP 1: Go to the ‘Import File’ tab and upload the File
 Builder output file</strong></u></p>
 <p>(Should be named BCG_TaxaTranslator_Results_wAttributes.csv)</p>
-<p>Make sure your data were collected and processed using these field
-and laboratory protocols
-<a href="https://github.com/Blocktt/LowerBoiseBCGCalc/blob/main/inst/apps/LowerBoiseBCGCalc/www/links/Methods_Bugs_Fish_20260525.pdf" target="_blank">[PDF]</a>.</p>
 <p><u><strong>Step 2: Return to the calculation tab and run the BCG
 calculator</strong></u></p>
 <p>The R code will perform the following steps:</p>
@@ -66,7 +73,16 @@ BCG_1markexcl
 <td style="text-align:left;">
 Input file with an ‘EXCLUDE’ taxa column added in (a TRUE/FALSE field in
 which R marks redundant taxa as ‘TRUE’ based on the taxonomic hierarchy
-fields in the input file).
+fields in the input file). Includes length and age class information.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+BCG_1markexcl_noAgeClass
+</td>
+<td style="text-align:left;">
+Input file with an ‘EXCLUDE’ taxa column added in (see above). Does NOT
+include length and age class information.
 </td>
 </tr>
 <tr>
@@ -191,9 +207,9 @@ species/age class category (per sample)
 </tbody>
 </table>
 <p><strong>Download METADATA</strong>
-<a href="https://github.com/Blocktt/LowerBoiseBCGCalc/blob/main/inst/apps/LowerBoiseBCGCalc/www/links/Metadata_Calculations_BCG_20260526.zip" target="_blank">[ZIP]</a>
+<a href="https://github.com/Blocktt/LowerBoiseBCGCalc/blob/main/inst/apps/LowerBoiseBCGCalc/www/links/Metadata_Calculations_BCG_20260707.zip" target="_blank">[ZIP]</a>
 for each individual output file.</p>
 <p><strong>Having problems? See the Troubleshooting tab.</strong></p>
 <hr />
-<p><em>Last updated 2026-05-27</em></p>
+<p><em>Last updated 2026-07-07</em></p>
 </div>

@@ -1,6 +1,6 @@
 ---
 title: "About_1About"
-date: "2026-05-28"
+date: "2026-07-07"
 output: html_fragment
 editor_options: 
   markdown: 
@@ -21,13 +21,35 @@ for macroinvertebrate and fish assemblages at sites on the mainstem of
 the Lower Boise River in Idaho. This report (Report Placeholder)
 describes the calibration of the BCG models.
 
+This tool generates additional outputs beyond just BCG results:
+
+-   Hundreds of metrics
+
+-   Summaries of fish age class categories
+
+If you are using the BCG results, your data should be collected and
+processed using these field and laboratory protocols
+[<a href="https://github.com/Blocktt/LowerBoiseBCGCalc/blob/main/inst/apps/LowerBoiseBCGCalc/www/links/Methods_Bugs_Fish_20260525.pdf" target="_blank">PDF</a>]:
+
+-   Macroinvertebrates: USGS National Water‑Quality Assessment (NAWQA)
+    Richest Targeted Habitat (RTH) method
+
+-   Fish: composite of two electrofishing passes - one through
+    deep-water areas with a boat or tow barge; the second through
+    shallower riffle areas with a backpack electrofisher
+
+If you used different methods, the BCG results should be interpreted
+with caution because they are outside the experience of the model.
+
 # <a href="https://github.com/Blocktt/LowerBoiseBCGCalc/blob/main/inst/apps/LowerBoiseBCGCalc/www/links/QuickTutorial_LBR_20260525.pdf" target="_blank">Quick Tutorial</a>
 
 **Test Files**:
 
--   Fish <a href="https://github.com/Blocktt/LowerBoiseBCGCalc/blob/main/inst/apps/LowerBoiseBCGCalc/www/links/LBR_Test_Fish_20260525.csv" target="_blank">[CSV]</a>
+-   Fish
+    <a href="https://github.com/Blocktt/LowerBoiseBCGCalc/blob/main/inst/apps/LowerBoiseBCGCalc/www/links/LBR_Fish_Input_20260707.csv" target="_blank">[CSV]</a>
 
--   Bugs <a href="https://github.com/Blocktt/LowerBoiseBCGCalc/blob/main/inst/apps/LowerBoiseBCGCalc/www/links/LBR_Test_Bugs_20260525.csv" target="_blank">[CSV]</a>
+-   Bugs
+    <a href="https://github.com/Blocktt/LowerBoiseBCGCalc/blob/main/inst/apps/LowerBoiseBCGCalc/www/links/LBR_Bug_Input_20260707.csv" target="_blank">[CSV]</a>
 
 For those who prefer to use R instead of this online calculator, the
 functions are carried out by the
@@ -40,15 +62,6 @@ Leppo from Tetra Tech ([Erik.Leppo\@tetratech.com](#0)).
 \*If using the R code instead of the Shiny app, you won’t need internet
 access if you have R installed on your computer and have downloaded all
 the necessary packages.
-
-**Methods are important!**
-
-Users can run any samples through this calculator and obtain a result.
-However, if samples were not collected and processed using these field
-and laboratory protocols
-<a href="https://github.com/Blocktt/LowerBoiseBCGCalc/blob/main/inst/apps/LowerBoiseBCGCalc/www/links/Methods_Bugs_Fish_20260525.pdf" target="_blank">PDF</a>,
-results should be interpreted with caution because they are outside the
-experience of the model.
 
 ## What is the Biological Condition Gradient?
 
@@ -80,4 +93,4 @@ to Describe Incremental Change in Aquatic Ecosystems</a>
 
 ------------------------------------------------------------------------
 
-*Last updated 2025-05-28*
+*Last updated 2026-07-07*
