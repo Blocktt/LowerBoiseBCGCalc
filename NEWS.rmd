@@ -21,6 +21,10 @@ knitr::opts_chunk$set(
 cat(paste0("Last Update: ",Sys.time()))
 ```
 
+# LowerBoiseBCGCalc 0.0.0.9023 (2026-07-08)
+
+* docs: Removed Rproj.user folder and added to gitignore
+
 # LowerBoiseBCGCalc 0.0.0.9022 (2026-06-03)
 
 * docs: Update missing entries in NEWS
