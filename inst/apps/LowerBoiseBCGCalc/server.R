@@ -1681,6 +1681,32 @@ shinyServer(function(input, output) {
 
       }## IF ~ input$ExclTaxa
 
+      ## 2.2 Fish no Age Class ----
+      if (my_comm == "Fish") {
+
+        fish_cols_keep <- c("INDEX_CLASS", "LOCATIONID", "ACTIVITYYEAR", "SAMPLEID"
+                            , "TAXAID", "COMMONNAME", "N_TAXA", "EXCLUDE"
+                            , "LBR_MAINSTEM", "RIS", "FAMILY", "OLDFAMILY"
+                            , "GENUS", "HYBRID", "NONTARGET", "NATIVE", "BCG_ATTR"
+                            , "BCG_ATTR2", "BCG_ATTR_ROMAN", "HABITAT", "TROPHIC"
+                            , "THERMAL_INDICATOR", "REPRODUCTION", "CONNECTIVITY")
+
+        df_fish_noAge <- df_input %>%
+          rename_with(toupper) %>%
+          select(-c(AGECLASS, AGECLASS_TEXT, LENGTH_MM)) %>%
+          group_by(across(-N_TAXA)) %>%
+          summarize(N_TAXA = sum(N_TAXA, na.rm = TRUE)
+                    , .groups = "drop") %>%
+          select(any_of(fish_cols_keep))
+
+        fn_excl <- "BCG_1markexcl_noAgeClass.csv"
+        dn_excl <- path_results_sub
+        pn_excl <- file.path(dn_excl, fn_excl)
+        write.csv(df_fish_noAge, pn_excl, row.names = FALSE)
+
+        rm(fish_cols_keep, df_fish_noAge)
+      } # END ~if
+
       ## Calc, 3, BCG Flag Cols ----
       # get columns from Flags (non-metrics) to carry through
       prog_detail <- "Calculate, Keep BCG Model Columns"
