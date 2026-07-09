@@ -443,6 +443,12 @@ shinyServer(function(input, output) {
 
       sel_user_sampid <- input$taxatrans_user_col_sampid
 
+      sel_user_locid <- input$taxatrans_user_col_locid
+
+      sel_user_actDate <- input$taxatrans_user_col_actDate
+
+      sel_user_actYear <- input$taxatrans_user_col_actYear
+
       sel_taxaid_drop <-  df_pick_taxoff[df_pick_taxoff$project == sel_proj
                                      , "taxaid_drop"]
       dir_proj_results <- df_pick_taxoff[df_pick_taxoff$project == sel_proj
@@ -528,7 +534,11 @@ shinyServer(function(input, output) {
                                                               , sel_user_ntaxa
                                                               , col_indexname
                                                               , sel_user_indexclass
-                                                              , sel_user_length)]
+                                                              , sel_user_length
+                                                              , sel_user_locid
+                                                              , sel_user_actDate
+                                                              , sel_user_actYear)]
+
       # flip to col_drop
       user_col_drop <- names(df_input)[!names(df_input) %in% user_col_keep]
 
@@ -758,6 +768,9 @@ shinyServer(function(input, output) {
 
         # drop translation file columns
         col_keep_ttrm <- names(df_ttrm)[names(df_ttrm) %in% c(sel_user_sampid
+                                                            , sel_user_locid
+                                                            , sel_user_actDate
+                                                            , sel_user_actYear
                                                             , sel_user_taxaid
                                                             , sel_user_ntaxa
                                                             , "Match_Official"
@@ -1668,7 +1681,6 @@ shinyServer(function(input, output) {
 
       }## IF ~ input$ExclTaxa
 
-
       ## Calc, 3, BCG Flag Cols ----
       # get columns from Flags (non-metrics) to carry through
       prog_detail <- "Calculate, Keep BCG Model Columns"
@@ -2074,7 +2086,6 @@ shinyServer(function(input, output) {
       dn_metmemb_xtab <- path_results_sub
       pn_metmemb_xtab <- file.path(dn_metmemb_xtab, fn_metmemb_xtab)
       write.csv(df_metmemb_xtab, pn_metmemb_xtab, row.names = FALSE)
-
 
       ## Calc, 9, RMD----
       prog_detail <- "Calculate, Create Report"
