@@ -21,6 +21,10 @@ knitr::opts_chunk$set(
 cat(paste0("Last Update: ",Sys.time()))
 ```
 
+# LowerBoiseBCGCalc 0.0.0.9029 (2026-07-10)
+
+* docs: Documented package before relaunch to shinyapps.io
+
 # LowerBoiseBCGCalc 0.0.0.9028 (2026-07-09)
 
 * refactor: Added new output for fish BCG_1markexcl_noAgeClass.
