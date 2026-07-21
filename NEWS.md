@@ -1,16 +1,24 @@
 LowerBoiseBCGCalc-NEWS
 ================
 <Ben.Block@tetratech.com>
-2026-07-21 14:26:03.487879
+2026-07-21 14:35:04.78913
 
 <!-- NEWS.md is generated from NEWS.Rmd. Please edit that file -->
 
-    #> Last Update: 2026-07-21 14:26:03.509912
+    #> Last Update: 2026-07-21 14:35:04.809464
 
-# LowerBoiseBCGCalc 0.0.0.9029 (2026-07-21)
+# LowerBoiseBCGCalc 0.0.0.9031 (2026-07-21)
+
+- refactor: merge clean up
+
+# LowerBoiseBCGCalc 0.0.0.9030 (2026-07-21)
 
 - refactor: Update BioMonTools package
 - refactor: Update Shiny prep code
+
+# LowerBoiseBCGCalc 0.0.0.9029 (2026-07-10)
+
+- docs: Updates to documentation
 
 # LowerBoiseBCGCalc 0.0.0.9028 (2026-07-09)
 
