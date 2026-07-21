@@ -1,11 +1,40 @@
 LowerBoiseBCGCalc-NEWS
 ================
 <Ben.Block@tetratech.com>
-2026-06-03 09:47:56.55037
+2026-07-21 14:26:03.487879
 
 <!-- NEWS.md is generated from NEWS.Rmd. Please edit that file -->
 
-    #> Last Update: 2026-06-03 09:47:56.633409
+    #> Last Update: 2026-07-21 14:26:03.509912
+
+# LowerBoiseBCGCalc 0.0.0.9029 (2026-07-21)
+
+- refactor: Update BioMonTools package
+- refactor: Update Shiny prep code
+
+# LowerBoiseBCGCalc 0.0.0.9028 (2026-07-09)
+
+- refactor: Added new output for fish BCG_1markexcl_noAgeClass.
+
+# LowerBoiseBCGCalc 0.0.0.9027 (2026-07-09)
+
+- refactor: New required fields included in FB output.
+
+# LowerBoiseBCGCalc 0.0.0.9026 (2026-07-08)
+
+- refactor: Added new required input fields in File Builder
+
+# LowerBoiseBCGCalc 0.0.0.9025 (2026-07-08)
+
+- refactor: Updated UI documentation for about, FB, and calc pages
+
+# LowerBoiseBCGCalc 0.0.0.9024 (2026-07-08)
+
+- docs: Removed Rproj.user folder and added to gitignore
+
+# LowerBoiseBCGCalc 0.0.0.9023 (2026-07-08)
+
+- docs: Removed Rproj.user folder and added to gitignore
 
 # LowerBoiseBCGCalc 0.0.0.9022 (2026-06-03)
 
