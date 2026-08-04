@@ -835,6 +835,12 @@ shinyServer(function(input, output) {
                                        %in% sel_user_taxaid] <- "TaxaID"
         names(taxatrans_results$merge)[names(taxatrans_results$merge)
                                        %in% sel_user_ntaxa] <- "N_Taxa"
+        names(taxatrans_results$merge)[names(taxatrans_results$merge)
+                                       %in% sel_user_actYear] <- "ActivityYear"
+        names(taxatrans_results$merge)[names(taxatrans_results$merge)
+                                       %in% sel_user_actDate] <- "ActivityDate"
+        names(taxatrans_results$merge)[names(taxatrans_results$merge)
+                                       %in% sel_user_locid] <- "LocationID"
       }## IF ~ boo_req_names
 
       # Hack/Fix
@@ -1736,7 +1742,8 @@ shinyServer(function(input, output) {
 
       # filter for data Index_Name in data (drop 2 extra columns)
       df_rules <- df_bcg_models[df_bcg_models$Index_Name == import_IndexName
-                                , !names(df_bcg_models) %in% c("SITE_TYPE", "INDEX_REGION")]
+                                , !names(df_bcg_models) %in% c("SITE_TYPE"
+                                                               , "INDEX_REGION")]
       # Save
       # fn_rules <- paste0(fn_input_base, fn_abr_save, "3metrules.csv")
       fn_rules <- "BCG_3metrules.csv"
@@ -1759,8 +1766,30 @@ shinyServer(function(input, output) {
       } #END ~ if
 
       # Metric calculation
+      if (BMT_comm == "fish") {
+        fun_cols2keep <- c("LOCATIONID", "ACTIVITYYEAR")
 
-      fun_cols2keep <- NULL
+        # Add optional metadata
+        cols_metadata <- c("SAMPLEID", "LOCATIONID", "ACTIVITYYEAR")
+        df_metadata <- df_input %>%
+          select(one_of(cols_metadata)) %>%
+          distinct()
+
+      } else {
+        fun_cols2keep <- c("LOCATIONID", "ACTIVITYYEAR", "ACTIVITYDATE")
+
+        # Add optional metadata
+        cols_metadata <- c("SAMPLEID", "LOCATIONID", "ACTIVITYYEAR", "ACTIVITYDATE")
+        df_metadata <- df_input %>%
+          select(one_of(cols_metadata)) %>%
+          distinct()
+      }
+
+      missing_cols <- setdiff(fun_cols2keep, names(df_input))
+
+      if (length(missing_cols) > 0) {
+        df_input[missing_cols] <- NA
+      }
 
       # Metric Values
       msg <- paste0("Community, ", BMT_comm)
@@ -1786,7 +1815,8 @@ shinyServer(function(input, output) {
       # cols_flags defined above
       cols_model_metrics <- unique(df_bcg_models[
         df_bcg_models$Index_Name == import_IndexName, "Metric_Name"])
-      cols_req <- c("SAMPLEID", "INDEX_NAME", "INDEX_CLASS"
+      cols_req <- c("SAMPLEID", "LOCATIONID", "ACTIVITYYEAR", "ACTIVITYDATE"
+                    , "INDEX_NAME", "INDEX_CLASS"
                     , "ni_total", "nt_total")
       cols_metrics_flags_keep <- unique(c(cols_req
                                           , cols_flags
@@ -1809,6 +1839,11 @@ shinyServer(function(input, output) {
 
       # Calc
       df_metmemb <- BCGcalc::BCG.Metric.Membership(df_metval, df_bcg_models)
+
+      df_metmemb <- left_join(df_metmemb, df_metadata, by = "SAMPLEID") %>%
+        select("INDEX_NAME", "INDEX_CLASS", "METRIC_NAME", all_of(cols_metadata)
+               , everything())
+
       # Save Results
       # fn_metmemb <- paste0(fn_input_base, fn_abr_save, "3metmemb.csv")
       fn_metmemb <- "BCG_3metmemb.csv"
@@ -1826,6 +1861,10 @@ shinyServer(function(input, output) {
 
       # Calc
       df_levmemb <- BCGcalc::BCG.Level.Membership(df_metmemb, df_bcg_models)
+
+      df_levmemb <- left_join(df_levmemb, df_metadata, by = "SAMPLEID") %>%
+        select("INDEX_NAME", "INDEX_CLASS", all_of(cols_metadata)
+               , everything())
       # Save Results
       # fn_levmemb <- paste0(fn_input_base, fn_abr_save, "4levmemb.csv")
       fn_levmemb <- "BCG_4levmemb.csv"
@@ -1843,6 +1882,11 @@ shinyServer(function(input, output) {
 
       # Calc
       df_levassign <- BCGcalc::BCG.Level.Assignment(df_levmemb)
+      df_levassign <- left_join(df_levassign, df_metadata
+                                , by = c("SampleID" = "SAMPLEID")) %>%
+        rename("SAMPLEID" = "SampleID") %>%
+        select(all_of(cols_metadata), everything())
+
       # Save Results
       # fn_levassign <- paste0(fn_input_base, fn_abr_save, "5levassign.csv")
       fn_levassign <- "BCG_5levassign.csv"
@@ -1906,7 +1950,7 @@ shinyServer(function(input, output) {
         # Merge Levels and Flags
         df_lev_flags <- merge(df_levassign
                               , df_flags_wide
-                              , by.x = "SampleID"
+                              , by.x = "SAMPLEID"
                               , by.y = "SAMPLEID"
                               , all.x = TRUE)
         # Flags Summary
@@ -1948,6 +1992,9 @@ shinyServer(function(input, output) {
 
       # Save, Flag Metrics
       # fn_metflags <- paste0(fn_input_base, fn_abr_save, "6metflags.csv")
+      df_metflags <- left_join(df_metflags, df_metadata, by = "SAMPLEID") %>%
+        select(all_of(cols_metadata), everything())
+
       fn_metflags <- "BCG_6metflags.csv"
       dn_metflags <- path_results_sub
       pn_metflags <- file.path(dn_metflags, fn_metflags)
@@ -2080,7 +2127,7 @@ shinyServer(function(input, output) {
       # 2026-05-26, add Metric_Sort
       df_metmemb_xtab <- df_results |>
         # cols to keep
-        dplyr::select(SampleID, BCG_Status2, NumFlags) |>
+        dplyr::select(SAMPLEID, BCG_Status2, NumFlags) |>
         # join tables
         dplyr::left_join(y = df_metmemb |>
                            dplyr::select(SAMPLEID,
@@ -2091,10 +2138,10 @@ shinyServer(function(input, output) {
                                          LEVEL,
                                          MEMBERSHIP,
                                          METRIC_SORT),
-                         by = dplyr::join_by(SampleID == SAMPLEID)) |>
+                         by = dplyr::join_by(SAMPLEID == SAMPLEID)) |>
         # pivot
         tidyr::pivot_wider(id_cols = c(INDEX_CLASS,
-                                       SampleID,
+                                       SAMPLEID,
                                        BCG_Status2,
                                        NumFlags,
                                        METRIC_SORT,
@@ -2105,7 +2152,7 @@ shinyServer(function(input, output) {
                            values_from = MEMBERSHIP,
                            names_sort = TRUE,
                            names_prefix = "L") |>
-      dplyr::arrange(SampleID, METRIC_SORT)
+      dplyr::arrange(SAMPLEID, METRIC_SORT)
 
       # save
       fn_metmemb_xtab <- "BCG_3metmemb_xtab_METRICSORT.csv"

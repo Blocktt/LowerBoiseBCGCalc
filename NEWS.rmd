@@ -21,6 +21,10 @@ knitr::opts_chunk$set(
 cat(paste0("Last Update: ",Sys.time()))
 ```
 
+# LowerBoiseBCGCalc 0.0.0.9032 (2026-08-04)
+
+* refactor: Added location, activity year, and activity date to all outputs
+
 # LowerBoiseBCGCalc 0.0.0.9031 (2026-07-21)
 
 * refactor: merge clean up
