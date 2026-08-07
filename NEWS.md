@@ -1,11 +1,17 @@
 LowerBoiseBCGCalc-NEWS
 ================
 <Ben.Block@tetratech.com>
-2026-08-07 15:47:27.030571
+2026-08-07 16:47:02.445807
 
 <!-- NEWS.md is generated from NEWS.Rmd. Please edit that file -->
 
-    #> Last Update: 2026-08-07 15:47:27.048913
+    #> Last Update: 2026-08-07 16:47:02.47508
+
+# LowerBoiseBCGCalc 0.0.0.9036 (2026-08-07)
+
+- refactor: Modify taxatranslate unique output
+  - Drop Modified_wCAPS and Modified_woCAPS
+  - Modified is TRUE if both were TRUE, else FALSE
 
 # LowerBoiseBCGCalc 0.0.0.9035 (2026-08-07)
 
