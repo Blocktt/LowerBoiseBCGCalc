@@ -283,6 +283,26 @@ shinyServer(function(input, output) {
                 , multiple = FALSE)
   })## UI_colnames
 
+  output$UI_taxatrans_user_col_delt <- renderUI({
+    req(input$taxatrans_pick_official == "Lower Boise BCG (Fish)")
+    req(df_import())
+    selectInput(inputId = "taxatrans_user_col_delt"
+                , label   = "Column, DELT count (e.g., deltCount)"
+                , choices = c("", names(df_import()))
+                , selected = "deltCount"
+                , multiple = FALSE)
+  })## UI_colnames
+
+  output$UI_taxatrans_user_col_density <- renderUI({
+    req(input$taxatrans_pick_official == "Lower Boise BCG (Bugs)")
+    req(df_import())
+    selectInput(inputId = "taxatrans_user_col_density"
+                , label   = "Column, Density (m2) (e.g., density_m2)"
+                , choices = c("", names(df_import()))
+                , selected = "density_m2"
+                , multiple = FALSE)
+  })## UI_colnames
+
   ## b_Calc_TaxaTrans ----
   observeEvent(input$b_calc_taxatrans, {
     shiny::withProgress({
@@ -449,6 +469,10 @@ shinyServer(function(input, output) {
 
       sel_user_actYear <- input$taxatrans_user_col_actYear
 
+      sel_user_delt <- input$taxatrans_user_col_delt
+
+      sel_user_density <- input$taxatrans_user_col_density
+
       sel_taxaid_drop <-  df_pick_taxoff[df_pick_taxoff$project == sel_proj
                                      , "taxaid_drop"]
       dir_proj_results <- df_pick_taxoff[df_pick_taxoff$project == sel_proj
@@ -528,16 +552,20 @@ shinyServer(function(input, output) {
 
       # include = yes; unique(sel_user_groupby)
       # include sampid, taxaid, and n_taxa so not dropped
-      user_col_keep <- names(df_input)[names(df_input) %in% c(sel_user_groupby
-                                                              , sel_user_sampid
-                                                              , sel_user_taxaid
-                                                              , sel_user_ntaxa
-                                                              , col_indexname
-                                                              , sel_user_indexclass
-                                                              , sel_user_length
-                                                              , sel_user_locid
-                                                              , sel_user_actDate
-                                                              , sel_user_actYear)]
+      # using "%in%" so can look for those that might not be *in* the file
+      #   (e.g., bugs vs. fish)
+      user_col_keep <- names(df_input)[names(df_input) %in% c(sel_user_groupby,
+                                                              sel_user_sampid,
+                                                              sel_user_taxaid,
+                                                              sel_user_ntaxa,
+                                                              col_indexname,
+                                                              sel_user_indexclass,
+                                                              sel_user_length,
+                                                              sel_user_locid,
+                                                              sel_user_actDate,
+                                                              sel_user_actYear,
+                                                              sel_user_delt,
+                                                              sel_user_density)]
 
       # flip to col_drop
       user_col_drop <- names(df_input)[!names(df_input) %in% user_col_keep]
@@ -767,18 +795,21 @@ shinyServer(function(input, output) {
         }
 
         # drop translation file columns
-        col_keep_ttrm <- names(df_ttrm)[names(df_ttrm) %in% c(sel_user_sampid
-                                                            , sel_user_locid
-                                                            , sel_user_actDate
-                                                            , sel_user_actYear
-                                                            , sel_user_taxaid
-                                                            , sel_user_ntaxa
-                                                            , "Match_Official"
-                                                            , sel_user_groupby
-                                                            , sel_user_indexclass
-                                                            , sel_user_length
-                                                            , "AgeClass"
-                                                            , "AgeClass_text")]
+        col_keep_ttrm <- names(df_ttrm)[names(df_ttrm) %in% c(sel_user_sampid,
+                                                            sel_user_locid,
+                                                            sel_user_actDate,
+                                                            sel_user_actYear,
+                                                            sel_user_taxaid,
+                                                            sel_user_ntaxa,
+                                                            "Match_Official",
+                                                            sel_user_groupby,
+                                                            sel_user_indexclass,
+                                                            sel_user_length,
+                                                            # 20260807
+                                                            sel_user_delt,
+                                                            sel_user_density,
+                                                            "AgeClass",
+                                                            "AgeClass_text")]
         df_ttrm <- df_ttrm[, col_keep_ttrm]
 
         # merge with attributes
@@ -841,6 +872,12 @@ shinyServer(function(input, output) {
                                        %in% sel_user_actDate] <- "ActivityDate"
         names(taxatrans_results$merge)[names(taxatrans_results$merge)
                                        %in% sel_user_locid] <- "LocationID"
+        # 20260807
+        names(taxatrans_results$merge)[names(taxatrans_results$merge)
+                                       %in% sel_user_delt] <- "deltCount"
+        names(taxatrans_results$merge)[names(taxatrans_results$merge)
+                                       %in% sel_user_density] <- "density_m2"
+
       }## IF ~ boo_req_names
 
       # Hack/Fix

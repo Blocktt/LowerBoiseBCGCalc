@@ -1,11 +1,178 @@
 LowerBoiseBCGCalc-NEWS
 ================
 <Ben.Block@tetratech.com>
-2026-01-02 16:18:29.043519
+2026-08-07 13:40:54.98327
 
 <!-- NEWS.md is generated from NEWS.Rmd. Please edit that file -->
 
-    #> Last Update: 2026-01-02 16:18:29.064723
+    #> Last Update: 2026-08-07 13:40:55.007284
+
+# LowerBoiseBCGCalc 0.0.0.9033 (2026-08-07)
+
+- refactor: Update required fields in file builder
+  - Requirements.xlsx
+  - 1About
+  - Server
+
+# LowerBoiseBCGCalc 0.0.0.9032 (2026-08-04)
+
+- refactor: Added location, activity year, and activity date to all
+  outputs
+
+# LowerBoiseBCGCalc 0.0.0.9031 (2026-07-21)
+
+- refactor: merge clean up
+
+# LowerBoiseBCGCalc 0.0.0.9030 (2026-07-21)
+
+- refactor: Update BioMonTools package
+- refactor: Update Shiny prep code
+
+# LowerBoiseBCGCalc 0.0.0.9029 (2026-07-10)
+
+- docs: Updates to documentation
+
+# LowerBoiseBCGCalc 0.0.0.9028 (2026-07-09)
+
+- refactor: Added new output for fish BCG_1markexcl_noAgeClass.
+
+# LowerBoiseBCGCalc 0.0.0.9027 (2026-07-09)
+
+- refactor: New required fields included in FB output.
+
+# LowerBoiseBCGCalc 0.0.0.9026 (2026-07-08)
+
+- refactor: Added new required input fields in File Builder
+
+# LowerBoiseBCGCalc 0.0.0.9025 (2026-07-08)
+
+- refactor: Updated UI documentation for about, FB, and calc pages
+
+# LowerBoiseBCGCalc 0.0.0.9024 (2026-07-08)
+
+- docs: Removed Rproj.user folder and added to gitignore
+
+# LowerBoiseBCGCalc 0.0.0.9023 (2026-07-08)
+
+- docs: Removed Rproj.user folder and added to gitignore
+
+# LowerBoiseBCGCalc 0.0.0.9022 (2026-06-03)
+
+- docs: Update missing entries in NEWS
+- docs: Update version number in DESCRIPTION
+- refactor: Update version number in global
+- fix: Add check for non-standard Index_Class in File Builder
+  - Change right before save
+- refactor: Added placeholder in File Builder for checking for duplicate
+  user selected column names
+
+# LowerBoiseBCGCalc 0.0.0.9021 (2026-05-28)
+
+- UI updates
+
+# LowerBoiseBCGCalc 0.0.0.9020 (2026-05-28)
+
+- Minor update that fixes output folder. Still need to deal with
+  duplicate from calc section.
+
+# LowerBoiseBCGCalc 0.0.0.9019 (2026-05-28)
+
+- Removed unnecessary files from past versions
+
+# LowerBoiseBCGCalc 0.0.0.9018 (2026-05-28)
+
+- Updated UI
+
+# LowerBoiseBCGCalc 0.0.0.9017 (2026-05-27)
+
+- UI updates to About tabs and Calculate tab.
+
+# LowerBoiseBCGCalc 0.0.0.9016 (2026-05-27)
+
+- Additional files in www
+
+# LowerBoiseBCGCalc 0.0.0.9015 (2026-05-27)
+
+- Preliminary updates to About UI RMD. Added images and files so links
+  are live.
+
+# LowerBoiseBCGCalc 0.0.0.9014 (2026-05-27)
+
+- fix: Update fish age class xtab to avoid crashing if don’t have all
+  classes
+  - Added max possible
+  - All values 0 when don’t occur
+    - Complete not working to get NA
+
+# LowerBoiseBCGCalc 0.0.0.9013 (2026-05-26)
+
+- refactor: Update to pick up changes in BCGcalc Rules.xlsx for metric
+  sort
+- refactor: Move AgeClass xtab from taxa translator to results
+- refactor: Update \_user_input and results_BCG output folders to
+  include community (Bugs or Fish)
+- refactor: Modify BCG_3metmemb_xtab_MetricSort.csv to include new sort
+  values from Rules.xlsx in BCGcalc
+- refactor: Update import of Rules.xlsx to avoid sort column as logical
+- refactor: Add xtab Fish_AgeClass_pClasses.csv
+- refactor: Update Fish_AgeClass_xtab.csv from 0 to NA when age class
+  not possible for that taxon
+
+# LowerBoiseBCGCalc 0.0.0.9012 (2026-05-21)
+
+- fix: Update for revision to BioMonTools to fix metric calc
+  - pi_dom01_BCG_att456t
+
+# LowerBoiseBCGCalc 0.0.0.9011 (2026-05-21)
+
+- docs: Add directions to README to run shiny app directly from GitHub
+
+# LowerBoiseBCGCalc 0.0.0.9010 (2026-05-21)
+
+- refactor: Update UI
+  - Hide unwanted tabs
+
+# LowerBoiseBCGCalc 0.0.0.9009 (2026-05-21)
+
+- refactor: Modify BCG_3metmemb_xtab columns
+- refactor: Modify order of columns in BCG Results file
+- fix: Modify QC check for missing INDEX_NAME in File Builder
+
+# LowerBoiseBCGCalc 0.0.0.9008 (2026-05-20)
+
+- docs: Add shiny app URL to readme
+
+# LowerBoiseBCGCalc 0.0.0.9007 (2026-05-20)
+
+- refactor: Update age class xtab for RIS == TRUE
+- refactor: Add membership xtab to BCG results
+
+# LowerBoiseBCGCalc 0.0.0.9006 (2026-05-20)
+
+- fix: Update BCGcalc package for update to Fish Main_Exckert rules
+
+# LowerBoiseBCGCalc 0.0.0.9005 (2026-05-20)
+
+- refactor: Add cross tab table for age class to fish output for file
+  builder
+
+# LowerBoiseBCGCalc 0.0.0.9004 (2026-05-20)
+
+- docs: Add missing packages to global.R
+  - kableExtra
+  - rsconnect
+
+# LowerBoiseBCGCalc 0.0.0.9003 (2026-05-20)
+
+- refactor: Update version number to global
+- refactor: Use revised versions of packages
+  - BioMonTools
+  - BCGcalc
+- docs: Add “\_tests” folder
+- docs: Add “\_tests” folder to gitignore
+- refactor: Update error catching for mismatch or blank Index_Name
+  - Bugs and Fish
+  - FileBuilder and BCG Calculation
 
 # LowerBoiseBCGCalc 0.0.0.9002 (2026-02-01)
 

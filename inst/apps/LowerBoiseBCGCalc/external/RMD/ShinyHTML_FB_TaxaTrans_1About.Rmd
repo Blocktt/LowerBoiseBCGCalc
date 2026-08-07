@@ -44,28 +44,7 @@ library(kableExtra)
 # Data
 fn <- "Requirements.xlsx"
 path <- file.path("files", fn)
-df <- read_excel(path, sheet = "Req_fields")
-
-options(knitr.kable.NA = '')
-df %>%
-  kable() %>%
-  kable_styling(full_width = F, position = "left")
-```
-
-**OPTIONAL fields can be included as well and will be carried through
-into the output file. If you include DELT anomalies (fish) and density
-(bugs) the column names must match what is shown below.**
-
-```{r table_optional}
-# Packages
-library(readxl)
-library(knitr)
-library(kableExtra)
-
-# Data
-fn <- "Requirements.xlsx"
-path <- file.path("files", fn)
-df <- read_excel(path, sheet = "Opt_Fields")
+df <- read_excel(path, sheet = "Req_Fields")
 
 options(knitr.kable.NA = '')
 df %>%

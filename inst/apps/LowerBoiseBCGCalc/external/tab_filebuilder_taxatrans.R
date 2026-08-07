@@ -29,6 +29,9 @@ function() {
             , uiOutput("UI_taxatrans_user_col_n_taxa")
             , uiOutput("UI_taxatrans_user_col_length")
             , uiOutput("UI_taxatrans_user_col_indexclass")
+            , uiOutput("UI_taxatrans_user_col_delt")
+            , uiOutput("UI_taxatrans_user_col_density")
+
 
             , h6("Additional Fields")
             , uiOutput("UI_taxatrans_user_col_groupby")
