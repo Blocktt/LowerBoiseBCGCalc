@@ -1,11 +1,20 @@
 LowerBoiseBCGCalc-NEWS
 ================
 <Ben.Block@tetratech.com>
-2026-08-07 14:07:18.039281
+2026-08-07 15:47:27.030571
 
 <!-- NEWS.md is generated from NEWS.Rmd. Please edit that file -->
 
-    #> Last Update: 2026-08-07 14:07:18.126884
+    #> Last Update: 2026-08-07 15:47:27.048913
+
+# LowerBoiseBCGCalc 0.0.0.9035 (2026-08-07)
+
+- refactor: Update NoAgeClass to combine such that only one row per taxa
+  name
+  - Account for DELTCOUNT
+- style: Replace some magrittr pipes with native pipes
+  - Server.R
+    - NoAgeClass
 
 # LowerBoiseBCGCalc 0.0.0.9034 (2026-08-07)
 

@@ -478,7 +478,7 @@ shinyServer(function(input, output) {
       dir_proj_results <- df_pick_taxoff[df_pick_taxoff$project == sel_proj
                                          , "dir_results"]
 
-    #   ### Index Name (proj) ----
+    #   ### Index Name (proj) ---
     #   if (sel_proj == "") {
     #     # end process with pop up
     #     msg <- "'Calculation' is missing!"
@@ -1050,6 +1050,11 @@ shinyServer(function(input, output) {
     }##content~END
     #, contentType = "application/zip"
   )##download ~ TaxaTrans
+
+
+  # ***-----
+  # OLD, REMOVE?-----
+  # ***-----
 
   # FB, MERGE FILES ----
 
@@ -1732,14 +1737,16 @@ shinyServer(function(input, output) {
                             , "LBR_MAINSTEM", "RIS", "FAMILY", "OLDFAMILY"
                             , "GENUS", "HYBRID", "NONTARGET", "NATIVE", "BCG_ATTR"
                             , "BCG_ATTR2", "BCG_ATTR_ROMAN", "HABITAT", "TROPHIC"
-                            , "THERMAL_INDICATOR", "REPRODUCTION", "CONNECTIVITY")
+                            , "THERMAL_INDICATOR", "REPRODUCTION", "CONNECTIVITY"
+                            , "DELTCOUNT")
 
-        df_fish_noAge <- df_input %>%
-          rename_with(toupper) %>%
-          select(-c(AGECLASS, AGECLASS_TEXT, LENGTH_MM)) %>%
-          group_by(across(-N_TAXA)) %>%
-          summarize(N_TAXA = sum(N_TAXA, na.rm = TRUE)
-                    , .groups = "drop") %>%
+        df_fish_noAge <- df_input |>
+          rename_with(toupper) |>
+          select(-c(AGECLASS, AGECLASS_TEXT, LENGTH_MM)) |>
+          group_by(across(-c(N_TAXA, DELTCOUNT))) |>
+          summarize(N_TAXA = sum(N_TAXA, na.rm = TRUE),
+                    DELTCOUNT = sum(DELTCOUNT, na.rm = TRUE),
+                    , .groups = "drop") |>
           select(any_of(fish_cols_keep))
 
         fn_excl <- "BCG_1markexcl_noAgeClass.csv"
