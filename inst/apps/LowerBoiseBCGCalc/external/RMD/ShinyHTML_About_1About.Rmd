@@ -41,7 +41,8 @@ processed using these field and laboratory protocols
 If you used different methods, the BCG results should be interpreted
 with caution because they are outside the experience of the model.
 
-# <a href="https://github.com/Blocktt/LowerBoiseBCGCalc/blob/main/inst/apps/LowerBoiseBCGCalc/www/links/QuickTutorial_LBR_20260525.pdf" target="_blank">Quick Tutorial</a>
+# Quick Tutorial
+Here is a short user guide <a href="https://github.com/Blocktt/LowerBoiseBCGCalc/blob/main/inst/apps/LowerBoiseBCGCalc/www/links/QuickTutorial_LBR_20260807.pdf" target="_blank">[PDF]</a>.
 
 **Test Files**:
 
@@ -93,4 +94,4 @@ to Describe Incremental Change in Aquatic Ecosystems</a>
 
 ------------------------------------------------------------------------
 
-*Last updated 2026-07-07*
+*Last updated 2026-08-07*

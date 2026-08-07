@@ -21,6 +21,12 @@ knitr::opts_chunk$set(
 cat(paste0("Last Update: ",Sys.time()))
 ```
 
+# LowerBoiseBCGCalc 0.0.0.9034 (2026-08-07)
+
+* refactor: Update user guide
+    + file
+    + link
+
 # LowerBoiseBCGCalc 0.0.0.9033 (2026-08-07)
 
 * refactor: Update required fields in file builder
