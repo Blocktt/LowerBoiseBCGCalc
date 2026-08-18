@@ -2181,29 +2181,67 @@ shinyServer(function(input, output) {
       ## 8.2 Metmemb xtab -----
       # 2026-05-20
       # 2026-05-26, add Metric_Sort
+      # 2026-08-18, add columns
+      ## Fish = LOCATIONID, ACTIVITYYEAR
+      ## Bugs = LOCATIONID, ACTIVITYYEAR, ACTIVITYDATE
+      if (my_comm == "Bugs") {
+        cols_metmemb_xtab_sel <- c("SAMPLEID",
+                                   "LOCATIONID",
+                                   "ACTIVITYYEAR",
+                                   "ACTIVITYDATE",
+                                   "INDEX_CLASS",
+                                   "METRIC_NAME",
+                                   "DESCRIPTION",
+                                   "METRIC_VALUE",
+                                   "LEVEL",
+                                   "MEMBERSHIP",
+                                   "METRIC_SORT")
+        cols_metmemb_xtab_pivot <- c("INDEX_CLASS",
+                                     "SAMPLEID",
+                                     "LOCATIONID",
+                                     "ACTIVITYYEAR",
+                                     "ACTIVITYDATE",
+                                     "BCG_Status2",
+                                     "NumFlags",
+                                     "METRIC_SORT",
+                                     "METRIC_NAME",
+                                     "DESCRIPTION",
+                                     "METRIC_VALUE")
+      } else if (my_comm == "Fish") {
+        cols_metmemb_xtab_sel <- c("SAMPLEID",
+                                   "LOCATIONID",
+                                   "ACTIVITYYEAR",
+                                   "INDEX_CLASS",
+                                   "METRIC_NAME",
+                                   "DESCRIPTION",
+                                   "METRIC_VALUE",
+                                   "LEVEL",
+                                   "MEMBERSHIP",
+                                   "METRIC_SORT")
+        cols_metmemb_xtab_pivot <- c("INDEX_CLASS",
+                                     "SAMPLEID",
+                                     "LOCATIONID",
+                                     "ACTIVITYYEAR",
+                                     "BCG_Status2",
+                                     "NumFlags",
+                                     "METRIC_SORT",
+                                     "METRIC_NAME",
+                                     "DESCRIPTION",
+                                     "METRIC_VALUE")
+      }## IF ~ my_comm
+      # error if not Bugs or Fish
+
+      # pick cols based on my_comm (Fish or Bugs)
+      #
       df_metmemb_xtab <- df_results |>
         # cols to keep
         dplyr::select(SAMPLEID, BCG_Status2, NumFlags) |>
         # join tables
         dplyr::left_join(y = df_metmemb |>
-                           dplyr::select(SAMPLEID,
-                                         INDEX_CLASS,
-                                         METRIC_NAME,
-                                         DESCRIPTION,
-                                         METRIC_VALUE,
-                                         LEVEL,
-                                         MEMBERSHIP,
-                                         METRIC_SORT),
+                           dplyr::select(dplyr::all_of(cols_metmemb_xtab_sel)),
                          by = dplyr::join_by(SAMPLEID == SAMPLEID)) |>
         # pivot
-        tidyr::pivot_wider(id_cols = c(INDEX_CLASS,
-                                       SAMPLEID,
-                                       BCG_Status2,
-                                       NumFlags,
-                                       METRIC_SORT,
-                                       METRIC_NAME,
-                                       DESCRIPTION,
-                                       METRIC_VALUE),
+        tidyr::pivot_wider(id_cols = dplyr::all_of(cols_metmemb_xtab_pivot),
                            names_from = LEVEL,
                            values_from = MEMBERSHIP,
                            names_sort = TRUE,
