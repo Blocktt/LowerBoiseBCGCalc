@@ -21,6 +21,12 @@ knitr::opts_chunk$set(
 cat(paste0("Last Update: ",Sys.time()))
 ```
 
+# LowerBoiseBCGCalc 0.0.0.9038 (2026-08-26)
+
+* refactor: Modify "BCG_3metmemb_xtab_METRICSORT.csv" for alternate rules, Issue #3
+    + Add package to distinct function call
+* style: Add missing packages to other function calls in Server.R
+
 # LowerBoiseBCGCalc 0.0.0.9037 (2026-08-18)
 
 * refactor: Add extra columns to BCG_3metmemb_xtab_METRICSORT, Issue #1

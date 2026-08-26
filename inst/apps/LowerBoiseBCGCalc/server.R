@@ -754,7 +754,7 @@ shinyServer(function(input, output) {
         taxatrans_results$merge <- taxatrans_results$merge %>%
           # create row id BEFORE the join
           mutate(row_id = row_number()) %>%
-          left_join(df_ageclass %>% select(any_of(col_taxaid_ageclass)
+          left_join(df_ageclass %>% dplyr::select(any_of(col_taxaid_ageclass)
                                            , MinLength_mm, MaxLength_mm
                                            , .data[[var_AgeClass]]
                                            , .data[[var_AgeClass_text]])
@@ -769,7 +769,7 @@ shinyServer(function(input, output) {
           # pick the first match for that fish
           slice_head(n = 1) %>%
           ungroup() %>%
-          select(-c(match_flag, row_id, MinLength_mm, MaxLength_mm))
+          dplyr::select(-c(match_flag, row_id, MinLength_mm, MaxLength_mm))
 
         }## IF ~ fn_ageclass
 
@@ -1828,8 +1828,8 @@ shinyServer(function(input, output) {
         # Add optional metadata
         cols_metadata <- c("SAMPLEID", "LOCATIONID", "ACTIVITYYEAR")
         df_metadata <- df_input %>%
-          select(one_of(cols_metadata)) %>%
-          distinct()
+          dplyr::select(dplyr::one_of(cols_metadata)) %>%
+          dplyr::distinct()
 
       } else {
         fun_cols2keep <- c("LOCATIONID", "ACTIVITYYEAR", "ACTIVITYDATE")
@@ -1837,8 +1837,8 @@ shinyServer(function(input, output) {
         # Add optional metadata
         cols_metadata <- c("SAMPLEID", "LOCATIONID", "ACTIVITYYEAR", "ACTIVITYDATE")
         df_metadata <- df_input %>%
-          select(one_of(cols_metadata)) %>%
-          distinct()
+          dplyr::select(dplyr::one_of(cols_metadata)) %>%
+          dplyr::distinct()
       }
 
       missing_cols <- setdiff(fun_cols2keep, names(df_input))
@@ -1894,11 +1894,17 @@ shinyServer(function(input, output) {
       Sys.sleep(prog_sleep)
 
       # Calc
-      df_metmemb <- BCGcalc::BCG.Metric.Membership(df_metval, df_bcg_models)
+      df_metmemb <- BCGcalc::BCG.Metric.Membership(df_metval,
+                                                   df_bcg_models)
 
-      df_metmemb <- left_join(df_metmemb, df_metadata, by = "SAMPLEID") %>%
-        select("INDEX_NAME", "INDEX_CLASS", "METRIC_NAME", all_of(cols_metadata)
-               , everything())
+      df_metmemb <- dplyr::left_join(df_metmemb,
+                                     df_metadata,
+                                     by = "SAMPLEID") %>%
+        dplyr::select("INDEX_NAME",
+               "INDEX_CLASS",
+               "METRIC_NAME",
+               dplyr::all_of(cols_metadata),
+               dplyr::everything())
 
       # Save Results
       # fn_metmemb <- paste0(fn_input_base, fn_abr_save, "3metmemb.csv")
@@ -1916,11 +1922,16 @@ shinyServer(function(input, output) {
       Sys.sleep(prog_sleep)
 
       # Calc
-      df_levmemb <- BCGcalc::BCG.Level.Membership(df_metmemb, df_bcg_models)
+      df_levmemb <- BCGcalc::BCG.Level.Membership(df_metmemb,
+                                                  df_bcg_models)
 
-      df_levmemb <- left_join(df_levmemb, df_metadata, by = "SAMPLEID") %>%
-        select("INDEX_NAME", "INDEX_CLASS", all_of(cols_metadata)
-               , everything())
+      df_levmemb <- dplyr::left_join(df_levmemb,
+                                     df_metadata,
+                                     by = "SAMPLEID") %>%
+        dplyr::select("INDEX_NAME",
+                      "INDEX_CLASS",
+                      dplyr::all_of(cols_metadata)
+               , dplyr::everything())
       # Save Results
       # fn_levmemb <- paste0(fn_input_base, fn_abr_save, "4levmemb.csv")
       fn_levmemb <- "BCG_4levmemb.csv"
@@ -2239,7 +2250,9 @@ shinyServer(function(input, output) {
         # join tables
         dplyr::left_join(y = df_metmemb |>
                            dplyr::select(dplyr::all_of(cols_metmemb_xtab_sel)),
-                         by = dplyr::join_by(SAMPLEID == SAMPLEID)) |>
+                         by = dplyr::join_by(SAMPLEID == SAMPLEID))  |>
+        # account for Rule 1 and 2 duplicates
+        dplyr::distinct() |>
         # pivot
         tidyr::pivot_wider(id_cols = dplyr::all_of(cols_metmemb_xtab_pivot),
                            names_from = LEVEL,

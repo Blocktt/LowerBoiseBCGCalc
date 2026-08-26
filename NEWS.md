@@ -1,11 +1,18 @@
 LowerBoiseBCGCalc-NEWS
 ================
 <Ben.Block@tetratech.com>
-2026-08-18 13:05:45.821807
+2026-08-26 13:19:36.691413
 
 <!-- NEWS.md is generated from NEWS.Rmd. Please edit that file -->
 
-    #> Last Update: 2026-08-18 13:05:45.839816
+    #> Last Update: 2026-08-26 13:19:36.716709
+
+# LowerBoiseBCGCalc 0.0.0.9038 (2026-08-26)
+
+- refactor: Modify “BCG_3metmemb_xtab_METRICSORT.csv” for alternate
+  rules, Issue \#3
+  - Add package to distinct function call
+- style: Add missing packages to other function calls in Server.R
 
 # LowerBoiseBCGCalc 0.0.0.9037 (2026-08-18)
 
